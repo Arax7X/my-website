@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Todo App</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap");
+
+      :root {
+        --bg: #0b1020;
+        --glass: rgba(18, 25, 48, 0.55);
+        --text: #e6e9f2;
+        --muted: #a8b0c3;
+        --accent: #7dd3fc;
+        --accent-2: #a78bfa;
+        --border: rgba(255, 255, 255, 0.08);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: "Space Grotesk", sans-serif;
+        background:
+          radial-gradient(900px circle at 10% -10%, rgba(125, 211, 252, 0.15), transparent 60%),
+          radial-gradient(800px circle at 110% 10%, rgba(167, 139, 250, 0.18), transparent 55%),
+          var(--bg);
+        color: var(--text);
+      }
+
+      .wrap {
+        max-width: 640px;
+        margin: 60px auto;
+        background: var(--glass);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 24px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+        backdrop-filter: blur(12px);
+      }
+
+      h1 { margin-top: 0; }
+
+      .row {
+        display: flex;
+        gap: 8px;
+      }
+
+      input {
+        flex: 1;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: rgba(255,255,255,0.06);
+        color: var(--text);
+      }
+
+      button {
+        padding: 10px 14px;
+        border: none;
+        border-radius: 10px;
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        color: #0b1020;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin-top: 16px;
+      }
+
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        margin-bottom: 8px;
+        background: rgba(255,255,255,0.04);
+      }
+
+      .done {
+        text-decoration: line-through;
+        color: var(--muted);
+      }
+
+      .delete {
+        background: #ef4444;
+        color: white;
+      }
+
+      .filters {
+        margin-top: 12px;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .filters button {
+        background: rgba(255,255,255,0.08);
+        color: var(--text);
+      }
+
+      .filters .active {
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        color: #0b1020;
+      }
+
+      .muted { color: var(--muted); margin: 10px 0; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Todo List</h1>
+      <div class="row">
+        <input id="todoInput" placeholder="Add a new task..." />
+        <button id="addBtn">Add</button>
+      </div>
+
+      <div class="filters">
+        <button data-filter="all">All</button>
+        <button data-filter="active">Active</button>
+        <button data-filter="done">Done</button>
+        <button id="clearBtn" class="delete">Clear All</button>
+      </div>
+
+      <input id="search" placeholder="Search tasks..." />
+      <button id="exportBtn">Export JSON</button>
+      <p id="counter" class="muted"></p>
+
+      <ul id="todoList"></ul>
+    </div>
+<script>
+  const input = document.getElementById("todoInput");
+  const addBtn = document.getElementById("addBtn");
+  const list = document.getElementById("todoList");
+  const clearBtn = document.getElementById("clearBtn");
+  const filterButtons = document.querySelectorAll(".filters button[data-filter]");
+  const counter = document.getElementById("counter");
+  const search = document.getElementById("search");
+  const exportBtn = document.getElementById("exportBtn");
+
+  let todos = JSON.parse(localStorage.getItem("todos")) || [];
+  let filter = "all";
+
+  function save() {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }
+
+  function render() {
+    list.innerHTML = "";
+
+    let filtered = todos;
+
+    if (filter === "active") filtered = todos.filter(t => !t.done);
+    if (filter === "done") filtered = todos.filter(t => t.done);
+
+    if (search.value.trim() !== "") {
+      const q = search.value.toLowerCase();
+      filtered = filtered.filter(t => t.text.toLowerCase().includes(q));
+    }
+
+    const left = todos.filter(t => !t.done).length;
+    counter.textContent = `${left} task(s) left`;
+
+    filtered.forEach((t) => {
+      const li = document.createElement("li");
+      li.draggable = true;
+
+      li.addEventListener("dragstart", () => {
+        li.classList.add("dragging");
+        li.dataset.dragId = todos.indexOf(t);
+      });
+
+      li.addEventListener("dragend", () => {
+        li.classList.remove("dragging");
+      });
+
+      const span = document.createElement("span");
+      span.textContent = t.text;
+      if (t.done) span.classList.add("done");
+
+      span.addEventListener("click", () => {
+        t.done = !t.done;
+        save();
+        render();
+      });
+
+      span.addEventListener("dblclick", () => {
+        li.classList.add("editing");
+        const editInput = document.createElement("input");
+        editInput.value = t.text;
+        li.innerHTML = "";
+        li.appendChild(editInput);
+        editInput.focus();
+
+        editInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            t.text = editInput.value.trim() || t.text;
+            save();
+            render();
+          }
+        });
+
+        editInput.addEventListener("blur", () => {
+          t.text = editInput.value.trim() || t.text;
+          save();
+          render();
+        });
+      });
+
+      const del = document.createElement("button");
+      del.textContent = "Delete";
+      del.className = "delete";
+      del.addEventListener("click", () => {
+        const realIndex = todos.indexOf(t);
+        todos.splice(realIndex, 1);
+        save();
+        render();
+      });
+
+      li.appendChild(span);
+      li.appendChild(del);
+      li.title = "Double‑click to edit";
+      list.appendChild(li);
+    });
+  }
+
+  list.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    const dragging = document.querySelector(".dragging");
+    const afterElement = Array.from(list.querySelectorAll("li:not(.dragging)"))
+      .find(el => e.clientY < el.getBoundingClientRect().top + el.offsetHeight / 2);
+
+    if (!dragging) return;
+
+    if (afterElement == null) {
+      list.appendChild(dragging);
+    } else {
+      list.insertBefore(dragging, afterElement);
+    }
+
+    const newOrder = Array.from(list.children).map(li => li.querySelector("span").textContent);
+    todos = newOrder.map(text => {
+      const t = todos.find(x => x.text === text);
+      return t;
+    });
+    save();
+  });
+
+  addBtn.addEventListener("click", () => {
+    const text = input.value.trim();
+    if (text) {
+      todos.push({ text, done: false });
+      input.value = "";
+      save();
+      render();
+    }
+  });
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") addBtn.click();
+  });
+
+  clearBtn.addEventListener("click", () => {
+    todos = [];
+    save();
+    render();
+  });
+
+  filterButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      filter = btn.dataset.filter;
+      filterButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      render();
+    });
+  });
+
+  search.addEventListener("input", render);
+
+  exportBtn.addEventListener("click", () => {
+    const data = JSON.stringify(todos, null, 2);
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "todos.json";
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  render();
+</script>
+  </body>
+</html>
