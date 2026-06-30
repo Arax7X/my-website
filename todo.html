@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A simple browser-based to-do list app with filters, search, and JSON export." />
     <title>Todo App</title>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap");
@@ -117,7 +118,7 @@
     <div class="wrap">
       <h1>Todo List</h1>
       <div class="row">
-        <input id="todoInput" placeholder="Add a new task..." />
+        <input id="todoInput" placeholder="Add a new task..." aria-label="Add a new task" />
         <button id="addBtn">Add</button>
       </div>
 
@@ -128,7 +129,7 @@
         <button id="clearBtn" class="delete">Clear All</button>
       </div>
 
-      <input id="search" placeholder="Search tasks..." />
+      <input id="search" placeholder="Search tasks..." aria-label="Search tasks" />
       <button id="exportBtn">Export JSON</button>
       <p id="counter" class="muted"></p>
 
