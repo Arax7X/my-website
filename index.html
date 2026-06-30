@@ -18,6 +18,17 @@
         --border: rgba(255, 255, 255, 0.08);
       }
 
+      body.light {
+        --bg: #eef1f8;
+        --glass: rgba(255, 255, 255, 0.7);
+        --glass-strong: rgba(255, 255, 255, 0.85);
+        --text: #141a2a;
+        --muted: #4a5675;
+        --accent: #2563eb;
+        --accent-2: #7c3aed;
+        --border: rgba(0, 0, 0, 0.12);
+      }
+
       * { box-sizing: border-box; }
 
       body {
@@ -220,7 +231,7 @@
       const btn = document.getElementById("themeBtn");
       if (btn) {
         btn.addEventListener("click", () => {
-          document.body.classList.toggle("dark");
+          document.body.classList.toggle("light");
         });
       }
     </script>
