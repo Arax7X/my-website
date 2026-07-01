@@ -5,7 +5,7 @@ pages that share one refined design system — with a live 3D cosmic background,
 dark & light themes, tasteful motion, and zero build step. Open it in a browser
 and it just works.
 
-> **Vibe:** deep-space · violet→cyan aurora · living 3D globe · futuristic-premium.
+> **Vibe:** deep-space · cold cyber · steel→cyan aurora · living 3D wireframe globe · futuristic-premium.
 
 ---
 
@@ -48,14 +48,15 @@ Everything visual is controlled by CSS custom properties at the top of
 
 ```css
 :root {
-  --gold:   #46e6ff;   /* accent 1 — cyan (buttons, links)        */
-  --gold-2: #8b6cff;   /* accent 2 — violet (gradient partner)    */
-  --violet: #7c5cff;   /* aurora violet — also colours the globe  */
-  --cyan:   #35e6ff;   /* aurora cyan   — also colours the globe  */
-  --bg:     #05060d;   /* page background (dark)                  */
-  --ink:    #eef0fb;   /* body text (dark)                        */
-  --serif:  "Fraunces", serif;   /* display font */
-  --sans:   "Inter", sans-serif; /* body font    */
+  --gold:   #3df0ff;   /* accent 1 — electric cyan (buttons, links) */
+  --gold-2: #4b7bff;   /* accent 2 — steel blue (gradient partner)  */
+  --violet: #3f6dff;   /* aurora blue — also colours the globe      */
+  --cyan:   #35e9ff;   /* aurora cyan — also colours the globe      */
+  --bg:     #05060d;   /* page background (dark)                    */
+  --ink:    #eef0fb;   /* body text (dark)                          */
+  --serif:  "Space Grotesk", sans-serif;   /* display font */
+  --sans:   "Inter", sans-serif;           /* body font    */
+  --mono:   "JetBrains Mono", monospace;   /* HUD labels   */
 }
 ```
 
@@ -66,8 +67,8 @@ The light theme lives under `html.light { … }` in the same file — adjust tho
 tokens to tune light mode independently.
 
 ### Swap the fonts
-Replace the Google Fonts `<link>` in each page's `<head>` and update `--serif`
-/ `--sans`. That's it.
+Replace the Google Fonts `<link>` in each page's `<head>` and update `--serif`,
+`--sans`, and `--mono`. That's it.
 
 ---
 

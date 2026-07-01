@@ -77,6 +77,25 @@
       pts.push({ x: Math.cos(theta) * rad, y: y, z: Math.sin(theta) * rad });
     }
 
+    // wireframe mesh — connect each node to its nearest neighbours (precomputed once)
+    var edges = [];
+    (function () {
+      var seen = {}, K = 3, WIN = 40;
+      for (var i = 0; i < N; i++) {
+        var cand = [], lo = Math.max(0, i - WIN), hi = Math.min(N, i + WIN);
+        for (var j = lo; j < hi; j++) {
+          if (j === i) continue;
+          var dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y, dz = pts[i].z - pts[j].z;
+          cand.push([dx * dx + dy * dy + dz * dz, j]);
+        }
+        cand.sort(function (a, b) { return a[0] - b[0]; });
+        for (var k = 0; k < K && k < cand.length; k++) {
+          var a = Math.min(i, cand[k][1]), b = Math.max(i, cand[k][1]), key = a + "_" + b;
+          if (!seen[key]) { seen[key] = 1; edges.push([a, b]); }
+        }
+      }
+    })();
+
     // orbit rings (tilt, radius scale, speed, phase)
     rings = [
       { rx: 1.55, ry: 0.42, tilt: -0.38, speed: 0.55, phase: 0 },
@@ -134,8 +153,8 @@
 
       // aurora halo behind globe
       var halo = ctx.createRadialGradient(cx + px * 30, cy + py * 20, R * 0.1, cx, cy, R * 1.7);
-      halo.addColorStop(0, "rgba(124,92,255,0.28)");
-      halo.addColorStop(0.5, "rgba(53,230,255,0.10)");
+      halo.addColorStop(0, "rgba(60,110,255,0.30)");
+      halo.addColorStop(0.5, "rgba(53,230,255,0.11)");
       halo.addColorStop(1, "rgba(5,6,13,0)");
       ctx.fillStyle = halo;
       ctx.fillRect(0, 0, W, H);
@@ -143,32 +162,44 @@
       var rot = t * 0.18;
       var ocx = cx + px * 26, ocy = cy + py * 18;
 
-      // globe points
+      // project every node (kept in index order so mesh edges can reference them)
       var cosR = Math.cos(rot), sinR = Math.sin(rot);
       var cosT = Math.cos(tilt), sinT = Math.sin(tilt);
-      var projected = [];
+      var proj = [];
       for (var i = 0; i < pts.length; i++) {
         var p = pts[i];
         var x1 = p.x * cosR + p.z * sinR;
         var z1 = -p.x * sinR + p.z * cosR;
         var y2 = p.y * cosT - z1 * sinT;
         var z2 = p.y * sinT + z1 * cosT;
-        var depth = (z2 + 1) / 2;
         var persp = CAM / (CAM - z2);
-        projected.push({
+        proj.push({
           sx: ocx + x1 * R * persp,
           sy: ocy + y2 * R * persp,
-          d: depth
+          d: (z2 + 1) / 2
         });
       }
-      projected.sort(function (a, b) { return a.d - b.d; });
-      for (var j = 0; j < projected.length; j++) {
-        var pr = projected[j];
-        var col = mix(VIOLET, CYAN, pr.d);
-        var alpha = 0.12 + pr.d * 0.8;
-        var size = 0.7 + pr.d * 1.7;
+
+      // wireframe edges (drawn first, behind the nodes) — front edges brighter
+      ctx.lineWidth = 0.6;
+      for (var e = 0; e < edges.length; e++) {
+        var ea = proj[edges[e][0]], eb = proj[edges[e][1]];
+        var ed = (ea.d + eb.d) * 0.5;
         ctx.beginPath();
-        ctx.fillStyle = col.replace("rgb", "rgba").replace(")", "," + alpha.toFixed(3) + ")");
+        ctx.strokeStyle = mix(VIOLET, CYAN, ed).replace("rgb", "rgba").replace(")", "," + (0.04 + ed * ed * 0.30).toFixed(3) + ")");
+        ctx.moveTo(ea.sx, ea.sy);
+        ctx.lineTo(eb.sx, eb.sy);
+        ctx.stroke();
+      }
+
+      // nodes, painted back-to-front
+      var order = proj.slice().sort(function (a, b) { return a.d - b.d; });
+      for (var j = 0; j < order.length; j++) {
+        var pr = order[j];
+        var alpha = 0.14 + pr.d * 0.78;
+        var size = 0.6 + pr.d * 1.7;
+        ctx.beginPath();
+        ctx.fillStyle = mix(VIOLET, CYAN, pr.d).replace("rgb", "rgba").replace(")", "," + alpha.toFixed(3) + ")");
         ctx.arc(pr.sx, pr.sy, size, 0, 6.2832);
         ctx.fill();
       }
