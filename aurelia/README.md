@@ -1,10 +1,11 @@
 # ◆ Aurelia — Design, elevated
 
 An elite, conversion-first website kit for premium brands and studios. Six crafted
-pages that share one refined design system, with dark & light themes, tasteful
-motion, and zero build step. Open it in a browser and it just works.
+pages that share one refined design system — with a live 3D cosmic background,
+dark & light themes, tasteful motion, and zero build step. Open it in a browser
+and it just works.
 
-> **Vibe:** luxury brand · champagne gold · elegant serif · restrained.
+> **Vibe:** deep-space · violet→cyan aurora · living 3D globe · futuristic-premium.
 
 ---
 
@@ -47,14 +48,19 @@ Everything visual is controlled by CSS custom properties at the top of
 
 ```css
 :root {
-  --gold:   #d8b26a;   /* your accent            */
-  --gold-2: #b98f4c;   /* accent, darker         */
-  --bg:     #0b0b0e;   /* page background (dark)  */
-  --ink:    #f3efe9;   /* body text (dark)        */
+  --gold:   #46e6ff;   /* accent 1 — cyan (buttons, links)        */
+  --gold-2: #8b6cff;   /* accent 2 — violet (gradient partner)    */
+  --violet: #7c5cff;   /* aurora violet — also colours the globe  */
+  --cyan:   #35e6ff;   /* aurora cyan   — also colours the globe  */
+  --bg:     #05060d;   /* page background (dark)                  */
+  --ink:    #eef0fb;   /* body text (dark)                        */
   --serif:  "Fraunces", serif;   /* display font */
   --sans:   "Inter", sans-serif; /* body font    */
 }
 ```
+
+> The 3D background reads `--violet` and `--cyan` at load, so changing those two
+> tokens re-tints the globe and starfield glow along with the rest of the kit.
 
 The light theme lives under `html.light { … }` in the same file — adjust those
 tokens to tune light mode independently.
@@ -67,6 +73,9 @@ Replace the Google Fonts `<link>` in each page's `<head>` and update `--serif`
 
 ## Features
 
+- **Live 3D cosmic background** — a rotating, glowing globe + starfield on a single
+  `<canvas>` (a few KB of vanilla JS, no library), pauses when hidden and stills for
+  `prefers-reduced-motion`.
 - **Six complete pages** sharing one coherent design language.
 - **Dark & light themes** — hand-tuned, saved to `localStorage`, no flash on load.
 - **Animated pricing toggle** — monthly/annual with a savings badge.
@@ -84,6 +93,9 @@ Replace the Google Fonts `<link>` in each page's `<head>` and update `--serif`
 
 | Attribute | Effect |
 |-----------|--------|
+| `data-cosmos` | Mounts the animated 3D starfield + globe canvas inside the element |
+| `data-cosmos-sm` | On a `data-cosmos` host: renders a smaller globe (used on inner page heroes) |
+| `data-cosmos-center` | On a `data-cosmos` host: vertically centres the globe |
 | `data-theme-toggle` | Element toggles dark/light on click |
 | `data-menu-toggle` | Element opens/closes the mobile menu |
 | `data-reveal` | Element fades/rises in when scrolled into view (`.d1`/`.d2`/`.d3` stagger) |
