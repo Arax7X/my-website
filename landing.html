@@ -3,178 +3,638 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Nova — a clean, modern landing page template for creators and startups." />
-    <title>Nova — Modern Landing Page</title>
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap");
+    <meta name="description" content="Nova — a premium, responsive landing page template for startups, SaaS, and creators. Fast, customizable, and built with clean HTML & CSS. No build step." />
+    <meta name="theme-color" content="#0b1020" />
+    <title>Nova — Premium Landing Page Template</title>
 
+    <!-- Apply the saved theme before paint (avoids a flash) and flag that JS is on -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("nova-theme");
+          var prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+          if (saved === "light" || (!saved && prefersLight)) {
+            document.documentElement.classList.add("light");
+          }
+        } catch (e) {}
+        document.documentElement.classList.add("js");
+      })();
+    </script>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap");
+
+      /* ============================================================
+         NOVA — BRAND TOKENS
+         Change these variables to re-skin the whole page in seconds.
+         ============================================================ */
       :root {
         --bg: #0b1020;
-        --glass: rgba(18, 25, 48, 0.55);
+        --bg-soft: #0e1530;
+        --panel: rgba(18, 25, 48, 0.55);
+        --panel-2: rgba(255, 255, 255, 0.04);
         --text: #e6e9f2;
         --muted: #a8b0c3;
         --accent: #7dd3fc;
         --accent-2: #a78bfa;
-        --border: rgba(255, 255, 255, 0.08);
+        --on-accent: #0b1020;
+        --border: rgba(255, 255, 255, 0.10);
+        --border-strong: rgba(255, 255, 255, 0.18);
+        --shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+        --shadow-sm: 0 10px 30px rgba(0, 0, 0, 0.30);
+        --radius: 18px;
+        --radius-sm: 12px;
+        --pill: 999px;
+        --maxw: 1120px;
+        --sans: "Space Grotesk", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      html.light {
+        --bg: #eef1f8;
+        --bg-soft: #ffffff;
+        --panel: rgba(255, 255, 255, 0.72);
+        --panel-2: rgba(10, 15, 35, 0.035);
+        --text: #141a2a;
+        --muted: #4a5675;
+        --accent: #2563eb;
+        --accent-2: #7c3aed;
+        --on-accent: #ffffff;
+        --border: rgba(10, 15, 35, 0.10);
+        --border-strong: rgba(10, 15, 35, 0.18);
+        --shadow: 0 24px 70px rgba(31, 41, 84, 0.18);
+        --shadow-sm: 0 10px 30px rgba(31, 41, 84, 0.12);
       }
 
       * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
 
       body {
         margin: 0;
-        font-family: "Space Grotesk", sans-serif;
-        background:
-          radial-gradient(900px circle at 10% -10%, rgba(125, 211, 252, 0.15), transparent 60%),
-          radial-gradient(800px circle at 110% 10%, rgba(167, 139, 250, 0.18), transparent 55%),
-          var(--bg);
+        font-family: var(--sans);
         color: var(--text);
+        line-height: 1.6;
+        background:
+          radial-gradient(900px circle at 8% -10%, rgba(125, 211, 252, 0.16), transparent 60%),
+          radial-gradient(820px circle at 108% 6%, rgba(167, 139, 250, 0.18), transparent 55%),
+          radial-gradient(700px circle at 50% 120%, rgba(56, 189, 248, 0.10), transparent 60%),
+          var(--bg);
+        background-attachment: fixed;
+        -webkit-font-smoothing: antialiased;
+        transition: background-color 0.3s ease, color 0.3s ease;
       }
 
-      header, main, footer {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 32px 20px;
-      }
+      a { color: inherit; text-decoration: none; }
+      img { max-width: 100%; display: block; }
+      h1, h2, h3, h4 { line-height: 1.15; letter-spacing: -0.02em; }
 
-      .hero {
-        display: grid;
-        grid-template-columns: 1.2fr 1fr;
-        gap: 32px;
-        align-items: center;
-      }
+      .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 22px; }
 
-      .hero h1 {
-        font-size: 56px;
-        margin: 0 0 12px;
-      }
-
-      .hero p { color: var(--muted); }
-
-      .actions {
-        margin-top: 20px;
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-      }
-
+      /* ---------- Buttons ---------- */
       .btn {
-        padding: 12px 18px;
-        border-radius: 999px;
-        text-decoration: none;
-        font-weight: 700;
-        display: inline-block;
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 12px 20px; border-radius: var(--pill);
+        font-weight: 700; font-size: 15px; font-family: var(--sans);
+        border: 1px solid transparent; cursor: pointer; white-space: nowrap;
+        transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
       }
-
+      .btn:active { transform: translateY(1px); }
       .btn.primary {
         background: linear-gradient(90deg, var(--accent), var(--accent-2));
-        color: #0b1020;
+        color: var(--on-accent);
+        box-shadow: 0 10px 30px rgba(125, 211, 252, 0.25);
+      }
+      .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 16px 42px rgba(167, 139, 250, 0.38); }
+      .btn.ghost { background: var(--panel); color: var(--text); border: 1px solid var(--border); backdrop-filter: blur(10px); }
+      .btn.ghost:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+      .btn.sm { padding: 9px 16px; font-size: 14px; }
+      .btn.block { width: 100%; justify-content: center; }
+
+      /* ---------- Nav ---------- */
+      .nav { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid transparent;
+        transition: background 0.3s ease, border-color 0.3s ease; }
+      .nav.scrolled { background: var(--panel); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
+      .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 68px; }
+      .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; }
+      .brand .logo { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: var(--on-accent);
+        box-shadow: 0 6px 18px rgba(125, 211, 252, 0.35); font-size: 15px; }
+      .nav-links { display: flex; align-items: center; gap: 4px; margin: 0 auto; }
+      .nav-links a { padding: 8px 14px; border-radius: var(--pill); color: var(--muted); font-size: 15px;
+        transition: color 0.2s ease, background 0.2s ease; }
+      .nav-links a:hover { color: var(--text); background: var(--panel-2); }
+      .nav-actions { display: flex; align-items: center; gap: 10px; }
+      .icon-btn { width: 40px; height: 40px; border-radius: var(--pill); display: grid; place-items: center;
+        background: var(--panel); border: 1px solid var(--border); color: var(--text); cursor: pointer;
+        transition: border-color 0.2s ease, transform 0.15s ease; }
+      .icon-btn:hover { border-color: var(--border-strong); transform: translateY(-1px); }
+      .icon-btn .moon { display: none; }
+      .icon-btn .sun { display: block; }
+      html.light .icon-btn .sun { display: none; }
+      html.light .icon-btn .moon { display: block; }
+      .hamburger { display: none; }
+
+      /* ---------- Sections ---------- */
+      section { padding: 84px 0; scroll-margin-top: 84px; }
+      .eyebrow { font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.18em;
+        font-size: 12px; color: var(--accent); margin: 0 0 14px; }
+      .section-head { max-width: 640px; margin: 0 auto 48px; text-align: center; }
+      .section-head h2 { font-size: clamp(28px, 4vw, 40px); margin: 0 0 12px; }
+      .section-head p { color: var(--muted); font-size: 18px; margin: 0; }
+      .pill-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: var(--pill);
+        border: 1px solid var(--border); background: var(--panel); backdrop-filter: blur(10px);
+        font-size: 13px; color: var(--muted); font-family: var(--mono); }
+      .pill-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+
+      /* ---------- Hero ---------- */
+      .hero { padding: 60px 0 64px; }
+      .hero-grid { display: grid; grid-template-columns: 1.15fr 0.95fr; gap: 48px; align-items: center; }
+      .hero h1 { font-size: clamp(38px, 6vw, 66px); margin: 18px 0; }
+      .hero h1 .grad { background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        -webkit-background-clip: text; background-clip: text; color: transparent; }
+      .hero .lead { font-size: 19px; color: var(--muted); max-width: 520px; margin: 0 0 28px; }
+      .hero .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+      .trust { display: flex; align-items: center; gap: 14px; margin-top: 26px; }
+      .avatars { display: flex; }
+      .avatars span { width: 34px; height: 34px; border-radius: 50%; margin-left: -10px; border: 2px solid var(--bg);
+        background: linear-gradient(135deg, var(--accent), var(--accent-2)); display: grid; place-items: center;
+        font-size: 12px; font-weight: 700; color: var(--on-accent); }
+      .avatars span:first-child { margin-left: 0; }
+      .trust small { color: var(--muted); font-size: 13px; display: block; }
+      .stars { color: #fbbf24; letter-spacing: 2px; }
+
+      .preview { position: relative; border-radius: var(--radius); border: 1px solid var(--border);
+        background: var(--panel); backdrop-filter: blur(14px); box-shadow: var(--shadow); padding: 18px; }
+      .preview::before { content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px;
+        background: linear-gradient(135deg, rgba(125,211,252,0.5), transparent 42%, rgba(167,139,250,0.5));
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+      .preview-top { display: flex; gap: 6px; margin-bottom: 16px; }
+      .preview-top i { width: 11px; height: 11px; border-radius: 50%; background: var(--border-strong); }
+      .preview-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+      .preview-row strong { font-size: 14px; }
+      .preview-row .tag { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+      .preview .kpi { font-size: 30px; font-weight: 700; letter-spacing: -0.03em; }
+      .preview .kpi .up { font-size: 13px; color: #34d399; font-family: var(--mono); margin-left: 8px; }
+      .chart { display: flex; align-items: flex-end; gap: 8px; height: 108px; margin-top: 10px; }
+      .chart span { flex: 1; border-radius: 6px 6px 4px 4px;
+        background: linear-gradient(180deg, var(--accent), var(--accent-2)); opacity: 0.85; }
+      .mini-list { margin-top: 16px; display: grid; gap: 8px; }
+      .mini-list div { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px;
+        background: var(--panel-2); font-size: 13px; color: var(--muted); }
+      .mini-list .tick { width: 18px; height: 18px; border-radius: 50%; flex: none; display: grid; place-items: center;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: var(--on-accent); }
+
+      /* ---------- Logos ---------- */
+      .logos { padding: 6px 0 34px; }
+      .logos p { text-align: center; color: var(--muted); font-family: var(--mono); font-size: 12px;
+        letter-spacing: 0.15em; text-transform: uppercase; margin: 0 0 20px; }
+      .logo-row { display: flex; flex-wrap: wrap; gap: 34px; justify-content: center; align-items: center; opacity: 0.7; }
+      .logo-row span { font-weight: 700; font-size: 20px; color: var(--muted); }
+
+      /* ---------- Features ---------- */
+      .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+      .feature { border-radius: var(--radius); border: 1px solid var(--border); background: var(--panel);
+        backdrop-filter: blur(12px); padding: 26px;
+        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; }
+      .feature:hover { transform: translateY(-4px); border-color: var(--border-strong); box-shadow: var(--shadow-sm); }
+      .feature .chip { width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; margin-bottom: 16px;
+        background: linear-gradient(135deg, rgba(125,211,252,0.18), rgba(167,139,250,0.18));
+        border: 1px solid var(--border); color: var(--accent); }
+      .feature h3 { margin: 0 0 8px; font-size: 18px; }
+      .feature p { margin: 0; color: var(--muted); font-size: 15px; }
+
+      /* ---------- Stats ---------- */
+      .stats-band { border-radius: var(--radius); border: 1px solid var(--border); background: var(--panel);
+        backdrop-filter: blur(12px); padding: 34px; display: grid; grid-template-columns: repeat(4, 1fr);
+        gap: 20px; text-align: center; }
+      .stat b { display: block; font-size: 38px; font-weight: 700; letter-spacing: -0.02em;
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        -webkit-background-clip: text; background-clip: text; color: transparent; }
+      .stat span { color: var(--muted); font-size: 14px; }
+
+      /* ---------- Testimonials ---------- */
+      .t-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+      .quote { border-radius: var(--radius); border: 1px solid var(--border); background: var(--panel);
+        backdrop-filter: blur(12px); padding: 26px; display: flex; flex-direction: column; gap: 16px; }
+      .quote p { margin: 0; font-size: 16px; }
+      .who { display: flex; align-items: center; gap: 12px; margin-top: auto; }
+      .who .av { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; flex: none;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: var(--on-accent); font-weight: 700; }
+      .who b { display: block; font-size: 15px; }
+      .who small { color: var(--muted); }
+
+      /* ---------- Pricing ---------- */
+      .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; align-items: stretch; }
+      .price { position: relative; border-radius: var(--radius); border: 1px solid var(--border); background: var(--panel);
+        backdrop-filter: blur(12px); padding: 30px 26px; display: flex; flex-direction: column; }
+      .price.popular { border-color: transparent; box-shadow: var(--shadow); transform: translateY(-6px); }
+      .price.popular::before { content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1.5px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+      .badge-pop { position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+        background: linear-gradient(90deg, var(--accent), var(--accent-2)); color: var(--on-accent);
+        font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: var(--pill);
+        font-family: var(--mono); letter-spacing: 0.05em; }
+      .price h3 { margin: 0 0 6px; font-size: 18px; }
+      .price .amt { font-size: 44px; font-weight: 700; letter-spacing: -0.03em; }
+      .price .amt span { font-size: 15px; color: var(--muted); font-weight: 500; }
+      .price .desc { color: var(--muted); font-size: 14px; margin: 4px 0 20px; }
+      .price ul { list-style: none; padding: 0; margin: 0 0 26px; display: grid; gap: 12px; }
+      .price li { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--muted); }
+      .price li .tick { width: 20px; height: 20px; border-radius: 50%; flex: none; display: grid; place-items: center;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: var(--on-accent); }
+      .price .btn { margin-top: auto; }
+
+      /* ---------- FAQ ---------- */
+      .faq { max-width: 760px; margin: 0 auto; display: grid; gap: 12px; }
+      details.qa { border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--panel);
+        backdrop-filter: blur(12px); padding: 4px 20px; }
+      details.qa summary { list-style: none; cursor: pointer; display: flex; align-items: center;
+        justify-content: space-between; gap: 16px; padding: 16px 0; font-weight: 600; font-size: 16px; }
+      details.qa summary::-webkit-details-marker { display: none; }
+      details.qa summary .plus { transition: transform 0.2s ease; color: var(--accent); flex: none; }
+      details.qa[open] summary .plus { transform: rotate(45deg); }
+      details.qa p { margin: 0 0 18px; color: var(--muted); }
+
+      /* ---------- CTA band ---------- */
+      .cta-band { position: relative; border-radius: 26px; padding: 60px 40px; text-align: center; overflow: hidden;
+        border: 1px solid var(--border); backdrop-filter: blur(12px); box-shadow: var(--shadow);
+        background:
+          radial-gradient(600px circle at 20% 0%, rgba(125,211,252,0.22), transparent 60%),
+          radial-gradient(600px circle at 90% 120%, rgba(167,139,250,0.25), transparent 55%),
+          var(--panel); }
+      .cta-band h2 { font-size: clamp(28px, 4vw, 42px); margin: 0 0 12px; }
+      .cta-band p { color: var(--muted); font-size: 18px; margin: 0 0 26px; }
+      .cta-band .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+      /* ---------- Footer ---------- */
+      footer { border-top: 1px solid var(--border); padding: 56px 0 30px; margin-top: 20px; }
+      .foot-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 30px; }
+      .foot-brand p { color: var(--muted); font-size: 14px; max-width: 260px; margin: 14px 0 18px; }
+      .socials { display: flex; gap: 10px; }
+      .socials a { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); display: grid;
+        place-items: center; color: var(--muted); transition: color 0.2s, border-color 0.2s, transform 0.15s; }
+      .socials a:hover { color: var(--text); border-color: var(--border-strong); transform: translateY(-2px); }
+      .foot-col h4 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted);
+        margin: 0 0 14px; font-family: var(--mono); }
+      .foot-col a { display: block; color: var(--muted); font-size: 15px; padding: 5px 0; transition: color 0.2s; }
+      .foot-col a:hover { color: var(--text); }
+      .foot-bottom { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 40px;
+        padding-top: 22px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; flex-wrap: wrap; }
+
+      /* ---------- Reveal on scroll ---------- */
+      .js [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+      .js [data-reveal].in { opacity: 1; transform: none; }
+      @media (prefers-reduced-motion: reduce) {
+        .js [data-reveal] { opacity: 1 !important; transform: none !important; transition: none; }
+        html { scroll-behavior: auto; }
       }
 
-      .btn.ghost {
-        border: 1px solid var(--border);
-        color: var(--text);
-        background: transparent;
-        backdrop-filter: blur(10px);
+      /* ---------- Responsive ---------- */
+      @media (max-width: 900px) {
+        .hero-grid { grid-template-columns: 1fr; }
+        .preview { order: -1; }
+        .feature-grid, .t-grid, .price-grid { grid-template-columns: 1fr 1fr; }
+        .stats-band { grid-template-columns: 1fr 1fr; row-gap: 26px; }
+        .foot-grid { grid-template-columns: 1fr 1fr; }
       }
-
-      .card {
-        background: var(--glass);
-        border: 1px solid var(--border);
-        border-radius: 18px;
-        padding: 20px;
-        backdrop-filter: blur(12px);
-        box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      @media (max-width: 680px) {
+        .nav-links { display: none; }
+        .nav-links.open { display: flex; flex-direction: column; align-items: stretch; position: absolute;
+          top: 68px; left: 0; right: 0; margin: 0; background: var(--bg-soft); border-bottom: 1px solid var(--border);
+          padding: 12px 22px 20px; gap: 4px; }
+        .hamburger { display: grid; }
+        section { padding: 60px 0; }
+        .feature-grid, .t-grid, .price-grid { grid-template-columns: 1fr; }
+        .price.popular { transform: none; }
+        .cta-band { padding: 44px 22px; }
       }
-
-      .grid {
-        display: grid;
-        gap: 18px;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      }
-
-      .section-title {
-        font-size: 24px;
-        margin: 24px 0 16px;
-      }
-
-      .muted { color: var(--muted); }
-
-      .pricing {
-        display: grid;
-        gap: 18px;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      }
-
-      @media (max-width: 800px) {
-        .hero { grid-template-columns: 1fr; }
-        .hero h1 { font-size: 40px; }
-      }
+      @media (max-width: 460px) { .foot-grid { grid-template-columns: 1fr; } }
     </style>
   </head>
-  <body>
-    <header class="hero">
-      <div>
-        <h1>Build faster. Launch smarter.</h1>
-        <p>
-          Nova is a modern landing page template for creators and startups.
-          Clean layout, fast load, easy to customize.
-        </p>
-        <div class="actions">
-          <a class="btn primary" href="#">Get Started</a>
-          <a class="btn ghost" href="#">See Demo</a>
+  <body id="top">
+    <!-- ===== NAV ===== -->
+    <header class="nav" id="nav">
+      <div class="container nav-inner">
+        <a class="brand" href="#top" aria-label="Nova home">
+          <span class="logo" aria-hidden="true">◆</span> Nova
+        </a>
+        <nav class="nav-links" id="navLinks" aria-label="Primary">
+          <a href="#features">Features</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#testimonials">Reviews</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <div class="nav-actions">
+          <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle light and dark theme" title="Toggle theme">
+            <svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+            <svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          </button>
+          <a class="btn primary sm" href="#pricing">Get Started</a>
+          <button class="icon-btn hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+          </button>
         </div>
-      </div>
-      <div class="card">
-        <h3>Performance</h3>
-        <p class="muted">98/100 Lighthouse score.</p>
-        <h3>Design</h3>
-        <p class="muted">Minimal, premium look.</p>
-        <h3>Deploy</h3>
-        <p class="muted">Live in minutes.</p>
       </div>
     </header>
 
     <main>
-      <section>
-        <h2 class="section-title">Features</h2>
-        <div class="grid">
-          <div class="card">Responsive layout</div>
-          <div class="card">Reusable sections</div>
-          <div class="card">Clear CTA buttons</div>
-          <div class="card">Easy customization</div>
+      <!-- ===== HERO ===== -->
+      <section class="hero container">
+        <div class="hero-grid">
+          <div data-reveal>
+            <span class="pill-badge"><span class="dot"></span> New · Nova v2.0 is here</span>
+            <h1>Build faster.<br /><span class="grad">Launch smarter.</span></h1>
+            <p class="lead">Nova is a premium landing page template for startups, SaaS, and creators. Clean design, blazing-fast load, and everything is easy to customize — no build step required.</p>
+            <div class="actions">
+              <a class="btn primary" href="#pricing">Get Started Free</a>
+              <a class="btn ghost" href="#features">See Features</a>
+            </div>
+            <div class="trust">
+              <div class="avatars" aria-hidden="true"><span>A</span><span>M</span><span>S</span><span>K</span></div>
+              <div><span class="stars" aria-hidden="true">★★★★★</span><small>Loved by 2,000+ founders &amp; makers</small></div>
+            </div>
+          </div>
+
+          <div class="preview" data-reveal aria-hidden="true">
+            <div class="preview-top"><i></i><i></i><i></i></div>
+            <div class="preview-row"><strong>Monthly revenue</strong><span class="tag">Last 7 days</span></div>
+            <div class="kpi">$48.2k<span class="up">▲ 18%</span></div>
+            <div class="chart">
+              <span style="height:40%"></span><span style="height:66%"></span><span style="height:52%"></span>
+              <span style="height:80%"></span><span style="height:60%"></span><span style="height:94%"></span>
+              <span style="height:74%"></span>
+            </div>
+            <div class="mini-list">
+              <div><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> 312 new signups this week</div>
+              <div><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> Churn down 12%</div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section>
-        <h2 class="section-title">Testimonials</h2>
-        <div class="grid">
-          <div class="card">“We launched in one day.” — Mira</div>
-          <div class="card">“Looks premium.” — Alex</div>
-          <div class="card">“Converted 2x more leads.” — Sam</div>
+      <!-- ===== LOGOS ===== -->
+      <div class="logos container" data-reveal>
+        <p>Trusted by fast-moving teams</p>
+        <div class="logo-row">
+          <span>Northwind</span><span>Quanta</span><span>Lumen</span><span>Vertex</span><span>Halcyon</span>
+        </div>
+      </div>
+
+      <!-- ===== FEATURES ===== -->
+      <section id="features" class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Features</p>
+          <h2>Everything you need to launch</h2>
+          <p>A complete, polished set of sections you can rearrange, restyle, and ship in an afternoon.</p>
+        </div>
+        <div class="feature-grid" data-reveal>
+          <div class="feature">
+            <div class="chip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div>
+            <h3>Lightning fast</h3>
+            <p>One lightweight file, zero frameworks. Nova loads almost instantly and scores top marks on speed.</p>
+          </div>
+          <div class="feature">
+            <div class="chip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg></div>
+            <h3>Fully customizable</h3>
+            <p>Every color lives in one place at the top of the file. Change a few variables and re-skin the whole page.</p>
+          </div>
+          <div class="feature">
+            <div class="chip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></div>
+            <h3>Reusable sections</h3>
+            <p>Hero, features, pricing, testimonials, FAQ and more — mix and match the blocks you actually need.</p>
+          </div>
+          <div class="feature">
+            <div class="chip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+            <h3>Responsive by default</h3>
+            <p>Looks sharp on phones, tablets and giant monitors. The layout adapts so you never have to fight it.</p>
+          </div>
+          <div class="feature">
+            <div class="chip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <h3>Accessible &amp; SEO-ready</h3>
+            <p>Semantic markup, labels, and meta tags baked in — good for people, screen readers, and Google alike.</p>
+          </div>
+          <div class="feature">
+            <div class="chip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M17 7h4v4"/></svg></div>
+            <h3>Built to convert</h3>
+            <p>Clear calls to action, social proof and pricing designed to turn visitors into customers.</p>
+          </div>
         </div>
       </section>
 
-      <section>
-        <h2 class="section-title">Pricing</h2>
-        <div class="pricing">
-          <div class="card">
+      <!-- ===== STATS ===== -->
+      <div class="container" data-reveal>
+        <div class="stats-band">
+          <div class="stat"><b>98/100</b><span>Lighthouse score</span></div>
+          <div class="stat"><b>12k+</b><span>Downloads</span></div>
+          <div class="stat"><b>4.9★</b><span>Average rating</span></div>
+          <div class="stat"><b>&lt;1s</b><span>Load time</span></div>
+        </div>
+      </div>
+
+      <!-- ===== TESTIMONIALS ===== -->
+      <section id="testimonials" class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Reviews</p>
+          <h2>Loved by people who ship</h2>
+          <p>Founders, freelancers and makers use Nova to launch in days, not weeks.</p>
+        </div>
+        <div class="t-grid" data-reveal>
+          <div class="quote">
+            <span class="stars" aria-hidden="true">★★★★★</span>
+            <p>"We launched our whole site in a single day. Nova looked better than the $2k template we almost bought."</p>
+            <div class="who"><span class="av">MC</span><div><b>Mira Chen</b><small>Founder, Northwind</small></div></div>
+          </div>
+          <div class="quote">
+            <span class="stars" aria-hidden="true">★★★★★</span>
+            <p>"I use Nova as my base for every client project now. Swap the colors and copy, and I'm done by lunch."</p>
+            <div class="who"><span class="av">AK</span><div><b>Alex Kramer</b><small>Freelance designer</small></div></div>
+          </div>
+          <div class="quote">
+            <span class="stars" aria-hidden="true">★★★★★</span>
+            <p>"Converted almost 2× more leads than our old page. The pricing section alone paid for itself."</p>
+            <div class="who"><span class="av">SR</span><div><b>Sam Rivera</b><small>Growth, Quanta</small></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== PRICING ===== -->
+      <section id="pricing" class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Pricing</p>
+          <h2>Simple, honest pricing</h2>
+          <p>Buy once, use forever. No subscriptions, no surprises.</p>
+        </div>
+        <div class="price-grid" data-reveal>
+          <div class="price">
             <h3>Starter</h3>
-            <p class="muted">$0</p>
+            <div class="amt">$0</div>
+            <p class="desc">For your first project and learning the ropes.</p>
+            <ul>
+              <li><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> 1 landing page</li>
+              <li><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> Core Nova sections</li>
+              <li><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> Community support</li>
+            </ul>
+            <a class="btn ghost block" href="#">Start free</a>
           </div>
-          <div class="card">
+          <div class="price popular">
+            <span class="badge-pop">Most popular</span>
             <h3>Pro</h3>
-            <p class="muted">$19/mo</p>
+            <div class="amt">$19<span> one-time</span></div>
+            <p class="desc">For makers and freelancers shipping real projects.</p>
+            <ul>
+              <li><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> Everything in Starter</li>
+              <li><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> All 12 section blocks</li>
+              <li><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> Dark &amp; light themes</li>
+              <li><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> Lifetime updates</li>
+            </ul>
+            <a class="btn primary block" href="#">Get Pro</a>
           </div>
-          <div class="card">
+          <div class="price">
             <h3>Team</h3>
-            <p class="muted">$49/mo</p>
+            <div class="amt">$49<span> one-time</span></div>
+            <p class="desc">For agencies building for unlimited clients.</p>
+            <ul>
+              <li><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> Everything in Pro</li>
+              <li><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> Unlimited client projects</li>
+              <li><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> White-label license</li>
+            </ul>
+            <a class="btn ghost block" href="#">Choose Team</a>
           </div>
         </div>
       </section>
+
+      <!-- ===== FAQ ===== -->
+      <section id="faq" class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">FAQ</p>
+          <h2>Questions, answered</h2>
+        </div>
+        <div class="faq" data-reveal>
+          <details class="qa" open>
+            <summary>Do I need to know how to code? <span class="plus" aria-hidden="true">+</span></summary>
+            <p>Not really. Nova is a single HTML file with clear comments. Change the text, swap the colors at the top, and you're done. If you can edit a document, you can edit Nova.</p>
+          </details>
+          <details class="qa">
+            <summary>Can I use it for paid client work? <span class="plus" aria-hidden="true">+</span></summary>
+            <p>Yes. The Pro and Team licenses let you build unlimited sites, including paid projects for clients.</p>
+          </details>
+          <details class="qa">
+            <summary>How do I change the colors? <span class="plus" aria-hidden="true">+</span></summary>
+            <p>All brand colors live in one <code>:root</code> block at the top of the file. Edit a few variables and the entire page re-skins itself — including the dark and light themes.</p>
+          </details>
+          <details class="qa">
+            <summary>Is it really just one file? <span class="plus" aria-hidden="true">+</span></summary>
+            <p>Yes. HTML, CSS and a little JavaScript all live in <code>landing.html</code>. No build tools, no dependencies — just open it in a browser or drop it on any host.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ===== CTA BAND ===== -->
+      <div class="container" data-reveal>
+        <div class="cta-band">
+          <h2>Ready to launch something great?</h2>
+          <p>Grab Nova today and have a polished, high-converting page live before the day is out.</p>
+          <div class="actions">
+            <a class="btn primary" href="#pricing">Get Nova</a>
+            <a class="btn ghost" href="#features">Explore features</a>
+          </div>
+        </div>
+      </div>
     </main>
 
+    <!-- ===== FOOTER ===== -->
     <footer>
-      <p class="muted">© 2026 Nova Landing Page</p>
+      <div class="container">
+        <div class="foot-grid">
+          <div class="foot-brand">
+            <a class="brand" href="#top"><span class="logo" aria-hidden="true">◆</span> Nova</a>
+            <p>The fast, flexible landing page template for people who'd rather launch than fiddle.</p>
+            <div class="socials">
+              <a href="#" aria-label="Nova on X (Twitter)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+              <a href="#" aria-label="Nova on GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></a>
+              <a href="#" aria-label="Nova on LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+            </div>
+          </div>
+          <div class="foot-col">
+            <h4>Product</h4>
+            <a href="#features">Features</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#testimonials">Reviews</a>
+            <a href="#faq">FAQ</a>
+          </div>
+          <div class="foot-col">
+            <h4>Resources</h4>
+            <a href="#">Docs</a>
+            <a href="#">Guides</a>
+            <a href="#">Support</a>
+            <a href="#">Changelog</a>
+          </div>
+          <div class="foot-col">
+            <h4>Company</h4>
+            <a href="#">About</a>
+            <a href="#">Blog</a>
+            <a href="#">Contact</a>
+            <a href="#">License</a>
+          </div>
+        </div>
+        <div class="foot-bottom">
+          <span>© <span id="year">2026</span> Nova. All rights reserved.</span>
+          <span>Built with ♥ using Nova</span>
+        </div>
+      </div>
     </footer>
+
+    <script>
+      var root = document.documentElement;
+
+      // Theme toggle (persists your choice)
+      var themeBtn = document.getElementById("themeBtn");
+      var meta = document.querySelector('meta[name="theme-color"]');
+      function syncMeta() {
+        if (meta) meta.setAttribute("content", root.classList.contains("light") ? "#eef1f8" : "#0b1020");
+      }
+      syncMeta();
+      themeBtn.addEventListener("click", function () {
+        root.classList.toggle("light");
+        try { localStorage.setItem("nova-theme", root.classList.contains("light") ? "light" : "dark"); } catch (e) {}
+        syncMeta();
+      });
+
+      // Sticky nav gets a background once you scroll
+      var nav = document.getElementById("nav");
+      function onScroll() { nav.classList.toggle("scrolled", window.scrollY > 8); }
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      // Mobile menu
+      var burger = document.getElementById("hamburger");
+      var links = document.getElementById("navLinks");
+      burger.addEventListener("click", function () {
+        var open = links.classList.toggle("open");
+        burger.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      links.addEventListener("click", function (e) {
+        if (e.target.tagName === "A") { links.classList.remove("open"); burger.setAttribute("aria-expanded", "false"); }
+      });
+
+      // Reveal sections as they scroll into view
+      var reveals = document.querySelectorAll("[data-reveal]");
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+          });
+        }, { threshold: 0.12 });
+        reveals.forEach(function (el) { io.observe(el); });
+      } else {
+        reveals.forEach(function (el) { el.classList.add("in"); });
+      }
+
+      // Current year in footer
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
   </body>
 </html>
