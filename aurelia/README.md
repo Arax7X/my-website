@@ -54,9 +54,9 @@ Everything visual is controlled by CSS custom properties at the top of
   --cyan:   #35e9ff;   /* aurora cyan — also colours the globe      */
   --bg:     #05060d;   /* page background (dark)                    */
   --ink:    #eef0fb;   /* body text (dark)                          */
-  --serif:  "Space Grotesk", sans-serif;   /* display font */
+  --serif:  "Inter Tight", sans-serif;   /* display font */
   --sans:   "Inter", sans-serif;           /* body font    */
-  --mono:   "JetBrains Mono", monospace;   /* HUD labels   */
+  --mono:   "IBM Plex Mono", monospace;   /* data labels   */
 }
 ```
 
