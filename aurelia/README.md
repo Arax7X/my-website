@@ -18,9 +18,14 @@ and it just works.
 | `pricing.html` | Membership tiers with an animated monthly/annual toggle |
 | `about.html` | Studio story, principles, and stats |
 | `blog.html` | "Journal" — an essay/blog index layout |
+| `article.html` | Single-article template — a full, readable essay layout |
 | `contact.html` | Contact form + details (demo form, wire to your own endpoint) |
+| `404.html` | Styled not-found page with the live cosmos background |
 | `assets/styles.css` | The shared design system — every page inherits it |
 | `assets/app.js` | Shared behaviour: theme toggle, nav, reveal, pricing toggle |
+| `assets/favicon.svg` | The ◆ brand mark as a crisp SVG favicon |
+| `assets/og.png` | 1200×630 social-share image (Open Graph / Twitter) |
+| `assets/og-card.html` | Editable source for `og.png` — re-render to regenerate |
 
 No frameworks. No npm. No bundler. Just HTML, one stylesheet, and a few KB of
 vanilla JavaScript.
@@ -38,6 +43,27 @@ vanilla JavaScript.
 2. Edit the text to make it yours.
 3. Change a few tokens (below) to rebrand.
 4. Deploy the folder to any static host (Netlify, Vercel, GitHub Pages, S3…).
+
+---
+
+## Before you go live
+
+A few one-time swaps so the kit points at *you*, not the demo:
+
+1. **Set your domain.** Every page ships with `https://aurelia.studio` as a placeholder
+   in its `<link rel="canonical">` and its `og:`/`twitter:` tags. Find-and-replace that
+   string with your real domain across all pages — social-share previews and canonical
+   URLs depend on it.
+2. **Wire the contact form.** `contact.html` is a demo form; point it at your own email
+   service or form endpoint.
+3. **Regenerate the share image (optional).** After rebranding, edit
+   `assets/og-card.html` and re-render it to `assets/og.png` at 1200×630. Any headless
+   screenshot tool works, e.g.:
+   ```bash
+   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+     --headless=new --hide-scrollbars --window-size=1200,630 \
+     --screenshot=assets/og.png assets/og-card.html
+   ```
 
 ---
 

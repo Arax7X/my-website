@@ -99,7 +99,8 @@
     // orbit rings (tilt, radius scale, speed, phase)
     rings = [
       { rx: 1.55, ry: 0.42, tilt: -0.38, speed: 0.55, phase: 0 },
-      { rx: 1.9, ry: 0.30, tilt: 0.5, speed: -0.35, phase: 2.0 }
+      { rx: 1.9, ry: 0.30, tilt: 0.5, speed: -0.35, phase: 2.0 },
+      { rx: 2.25, ry: 0.55, tilt: 0.12, speed: 0.22, phase: 4.1 }
     ];
 
     function buildStars() {
@@ -123,7 +124,7 @@
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
       cx = W * 0.5;
       cy = H * (host.hasAttribute("data-cosmos-center") ? 0.5 : 0.62);
-      R = Math.min(W * 0.42, H * 0.7) * (host.hasAttribute("data-cosmos-sm") ? 0.7 : 1);
+      R = Math.min(W * 0.46, H * 0.72) * (host.hasAttribute("data-cosmos-sm") ? 0.68 : 1);
       buildStars();
       if (reduce) draw(0);
     }
@@ -141,8 +142,8 @@
       // starfield
       for (var s = 0; s < stars.length; s++) {
         var st = stars[s];
-        var sx = st.x + px * (8 + st.z * 22);
-        var sy = st.y + py * (8 + st.z * 22);
+        var sx = st.x + px * (10 + st.z * 26);
+        var sy = st.y + py * (10 + st.z * 26);
         var a = 0.35 + 0.5 * (0.5 + 0.5 * Math.sin(t * st.ts + st.tw));
         a *= 0.4 + st.z * 0.6;
         ctx.beginPath();
@@ -152,19 +153,20 @@
       }
 
       // aurora halo behind globe
-      var halo = ctx.createRadialGradient(cx + px * 30, cy + py * 20, R * 0.1, cx, cy, R * 1.7);
+      var halo = ctx.createRadialGradient(cx + px * 30, cy + py * 20, R * 0.1, cx, cy, R * (1.7 + 0.06 * Math.sin(t * 0.6)));
       halo.addColorStop(0, "rgba(60,110,255,0.30)");
       halo.addColorStop(0.5, "rgba(53,230,255,0.11)");
       halo.addColorStop(1, "rgba(5,6,13,0)");
       ctx.fillStyle = halo;
       ctx.fillRect(0, 0, W, H);
 
-      var rot = t * 0.18;
-      var ocx = cx + px * 26, ocy = cy + py * 18;
+      var rot = t * 0.18 + px * 0.55;
+      var ocx = cx + px * 38, ocy = cy + py * 26;
 
       // project every node (kept in index order so mesh edges can reference them)
       var cosR = Math.cos(rot), sinR = Math.sin(rot);
-      var cosT = Math.cos(tilt), sinT = Math.sin(tilt);
+      var dtilt = tilt + py * 0.22;
+      var cosT = Math.cos(dtilt), sinT = Math.sin(dtilt);
       var proj = [];
       for (var i = 0; i < pts.length; i++) {
         var p = pts[i];
@@ -181,12 +183,12 @@
       }
 
       // wireframe edges (drawn first, behind the nodes) — front edges brighter
-      ctx.lineWidth = 0.6;
+      ctx.lineWidth = 0.72;
       for (var e = 0; e < edges.length; e++) {
         var ea = proj[edges[e][0]], eb = proj[edges[e][1]];
         var ed = (ea.d + eb.d) * 0.5;
         ctx.beginPath();
-        ctx.strokeStyle = mix(VIOLET, CYAN, ed).replace("rgb", "rgba").replace(")", "," + (0.04 + ed * ed * 0.30).toFixed(3) + ")");
+        ctx.strokeStyle = mix(VIOLET, CYAN, ed).replace("rgb", "rgba").replace(")", "," + (0.05 + ed * ed * 0.38).toFixed(3) + ")");
         ctx.moveTo(ea.sx, ea.sy);
         ctx.lineTo(eb.sx, eb.sy);
         ctx.stroke();
@@ -196,8 +198,8 @@
       var order = proj.slice().sort(function (a, b) { return a.d - b.d; });
       for (var j = 0; j < order.length; j++) {
         var pr = order[j];
-        var alpha = 0.14 + pr.d * 0.78;
-        var size = 0.6 + pr.d * 1.7;
+        var alpha = 0.18 + pr.d * 0.82;
+        var size = 0.7 + pr.d * 1.9;
         ctx.beginPath();
         ctx.fillStyle = mix(VIOLET, CYAN, pr.d).replace("rgb", "rgba").replace(")", "," + alpha.toFixed(3) + ")");
         ctx.arc(pr.sx, pr.sy, size, 0, 6.2832);
