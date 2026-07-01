@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing — Aurelia</title>
+  <meta name="description" content="Simple, premium membership pricing for the Aurelia kit. Start with a 14-day free trial. Personal, Studio, and Atelier tiers — billed monthly or annually." />
+  <meta name="theme-color" content="#0b0b0e" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("aurelia-theme");
+        if (!t) t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        if (t === "light") document.documentElement.classList.add("light");
+      } catch (e) {}
+      document.documentElement.classList.remove("no-js");
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand"><span class="mark">◆</span> Aurelia</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="features.html">Features</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="about.html">About</a>
+        <a href="blog.html">Journal</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="icon-btn" data-theme-toggle aria-label="Toggle theme">
+          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+        <a href="pricing.html" class="btn btn-gold">Start free trial</a>
+        <button class="icon-btn hamburger" data-menu-toggle aria-label="Menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="features.html">Features</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="about.html">About</a>
+    <a href="blog.html">Journal</a>
+    <a href="contact.html">Contact</a>
+    <a href="pricing.html" class="btn btn-gold">Start free trial</a>
+  </div>
+
+  <!-- Page hero -->
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow" data-reveal>Membership</span>
+      <h1 data-reveal>Priced like it matters.</h1>
+      <p data-reveal>One membership, always up to date. Start free for 14 days — no card required. Keep the kit and every future refinement for as long as you're a member.</p>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="section" style="padding-top:56px;">
+    <div class="container">
+      <div class="price-toggle" data-reveal>
+        <span data-price-monthly class="on">Monthly</span>
+        <button class="switch" data-price-switch role="switch" aria-checked="false" aria-label="Toggle annual billing"></button>
+        <span data-price-annual>Annual <span class="save-pill">Save 20%</span></span>
+      </div>
+
+      <div class="prices">
+        <!-- Personal -->
+        <div class="price" data-reveal>
+          <div class="tier">Personal</div>
+          <div class="desc">For one brand or product that deserves to look expensive.</div>
+          <div class="amount">
+            <span class="cur">$</span><span class="val" data-m="18" data-a="14">18</span>
+            <span class="per" data-per>/month</span>
+          </div>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> All six pages</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Dark &amp; light themes</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> One brand / project</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Free updates while active</li>
+          </ul>
+          <a href="contact.html" class="btn btn-ghost btn-block">Start free trial</a>
+        </div>
+
+        <!-- Studio -->
+        <div class="price popular" data-reveal>
+          <div class="tier">Studio</div>
+          <div class="desc">For freelancers &amp; agencies shipping for clients.</div>
+          <div class="amount">
+            <span class="cur">$</span><span class="val" data-m="49" data-a="39">49</span>
+            <span class="per" data-per>/month</span>
+          </div>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Everything in Personal</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <b>Unlimited</b> client projects</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Source hand-off rights</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> New templates each quarter</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Priority email support</li>
+          </ul>
+          <a href="contact.html" class="btn btn-gold btn-block">Start free trial</a>
+        </div>
+
+        <!-- Atelier -->
+        <div class="price" data-reveal>
+          <div class="tier">Atelier</div>
+          <div class="desc">White-glove, for teams who want it done with them.</div>
+          <div class="amount">
+            <span class="cur">$</span><span class="val" data-m="129" data-a="99">129</span>
+            <span class="per" data-per>/month</span>
+          </div>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Everything in Studio</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Bespoke brand token setup</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> A dedicated design partner</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Custom page on request</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Same-day support</li>
+          </ul>
+          <a href="contact.html" class="btn btn-ghost btn-block">Talk to us</a>
+        </div>
+      </div>
+
+      <p class="center muted" style="margin-top:34px;font-size:0.9rem;">Prices in USD. Cancel anytime from your account. 14-day money-back guarantee on every paid plan.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Billing questions</span>
+        <h2>Good to know.</h2>
+      </div>
+      <div class="faq" data-reveal>
+        <details class="qa">
+          <summary>Is the free trial really free?<span class="plus">+</span></summary>
+          <p class="ans">Completely. Fourteen days, full access, no card up front. We'll remind you before it ends, and you only choose a plan if you decide to stay.</p>
+        </details>
+        <details class="qa">
+          <summary>What happens if I cancel?<span class="plus">+</span></summary>
+          <p class="ans">Any site you've already built stays live and yours forever. You simply stop receiving new templates and updates from the point you cancel. No lock-in, no clawback.</p>
+        </details>
+        <details class="qa">
+          <summary>Can I switch tiers later?<span class="plus">+</span></summary>
+          <p class="ans">Any time, in either direction. Upgrades apply immediately and are prorated; downgrades take effect at your next billing date.</p>
+        </details>
+        <details class="qa">
+          <summary>Why a subscription and not a one-time price?<span class="plus">+</span></summary>
+          <p class="ans">Because Aurelia keeps growing — new pages, new templates, and refinements land every quarter. Membership means your kit never goes stale, and the Studio tier pays for itself on a single client.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-sm">
+    <div class="container">
+      <div class="cta" data-reveal>
+        <h2>Fourteen days. Zero risk.</h2>
+        <p>See what your brand looks like at this level. If it's not for you, walk away — no card, no catch.</p>
+        <a href="contact.html" class="btn btn-gold btn-lg">Start free trial</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-about">
+          <a href="index.html" class="brand"><span class="mark">◆</span> Aurelia</a>
+          <p>An elite website kit for brands that refuse ordinary. Crafted for taste, tuned for conversion.</p>
+          <div class="socials">
+            <a href="#" class="icon-btn" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7 8 8.2 12h-6.4l-5-6.6L6 22H3l7.5-8.6L2.6 2H9l4.5 6z"/></svg></a>
+            <a href="#" class="icon-btn" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+            <a href="#" class="icon-btn" aria-label="Dribbble"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M5 8c5 0 11 1 14 6M8.5 3.5C12 8 14 14 14.5 20.5M2.5 13c6-1 10-4 13-9"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="features.html">Features</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="blog.html">Journal</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+          <a href="#">Careers</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#">Licence</a>
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Aurelia. Crafted with care.</span>
+        <span>Design, elevated.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

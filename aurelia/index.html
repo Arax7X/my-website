@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aurelia — Design, elevated</title>
+  <meta name="description" content="Aurelia is an elite, conversion-first website template for premium brands. A complete multi-page kit with a refined design system, dark & light themes, and everything you need to launch something exceptional." />
+  <meta name="theme-color" content="#0b0b0e" />
+  <meta property="og:title" content="Aurelia — Design, elevated" />
+  <meta property="og:description" content="An elite, conversion-first website template for premium brands." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("aurelia-theme");
+        if (!t) t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        if (t === "light") document.documentElement.classList.add("light");
+      } catch (e) {}
+      document.documentElement.classList.remove("no-js");
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Nav -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand"><span class="mark">◆</span> Aurelia</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="features.html">Features</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="about.html">About</a>
+        <a href="blog.html">Journal</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="icon-btn" data-theme-toggle aria-label="Toggle theme">
+          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+        <a href="pricing.html" class="btn btn-gold">Start free trial</a>
+        <button class="icon-btn hamburger" data-menu-toggle aria-label="Menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="features.html">Features</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="about.html">About</a>
+    <a href="blog.html">Journal</a>
+    <a href="contact.html">Contact</a>
+    <a href="pricing.html" class="btn btn-gold">Start free trial</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <span class="pill" data-reveal><span class="dot"></span> New · Aurelia 2.0 — the premium kit</span>
+      <h1 data-reveal>Design, <em>elevated</em>.<br />Built for brands that refuse ordinary.</h1>
+      <p class="lead" data-reveal>Aurelia is an elite, conversion-first template kit for premium products and studios. Every page is crafted with a refined design system — so you launch something that looks worth every penny.</p>
+      <div class="hero-actions" data-reveal>
+        <a href="pricing.html" class="btn btn-gold btn-lg">Start free trial</a>
+        <a href="features.html" class="btn btn-ghost btn-lg">Explore the kit</a>
+      </div>
+      <p class="hero-note" data-reveal>No card to start · 14-day trial · Cancel anytime</p>
+
+      <!-- Showcase -->
+      <div class="showcase" data-reveal>
+        <div class="showcase-bar"><i></i><i></i><i></i></div>
+        <div class="showcase-body">
+          <div class="mini-card">
+            <div class="lbl">Conversion this month</div>
+            <div class="big">7.9%</div>
+            <div class="bars">
+              <span style="height:40%"></span><span style="height:62%"></span>
+              <span style="height:48%"></span><span style="height:78%"></span>
+              <span style="height:66%"></span><span style="height:92%"></span>
+              <span style="height:74%"></span>
+            </div>
+          </div>
+          <div style="display:grid;gap:16px;">
+            <div class="mini-card"><div class="lbl">Revenue</div><div class="big">$48.2k</div></div>
+            <div class="mini-card"><div class="lbl">Avg. order value</div><div class="big">$312</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Logos -->
+  <section class="logos">
+    <div class="container">
+      <p>Trusted by discerning teams</p>
+      <div class="logo-row">
+        <span>Halcyon</span><span>Vireo</span><span>Lumen &amp; Co.</span><span>Northwind</span><span>Solène</span><span>Vertex</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">The kit</span>
+        <h2>Everything, considered.</h2>
+        <p>Six pages, one shared design language, and the details most templates skip. Built to feel bespoke out of the box.</p>
+      </div>
+      <div class="cards">
+        <article class="card" data-reveal>
+          <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8H20l-4.9 3.6 1.9 5.8L12 14.6 7 18.2l1.9-5.8L4 8.8h6.1z"/></svg></div>
+          <h3>Refined by default</h3>
+          <p>A Fraunces &amp; Inter type system, hairline borders, and a champagne palette tuned for a premium feel — nothing to fight, everything to enjoy.</p>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2"/></svg></div>
+          <h3>Dark &amp; light, done right</h3>
+          <p>A hand-tuned light theme that isn't an afterthought. One click, saved to the browser, no flash on load.</p>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg></div>
+          <h3>Six ready pages</h3>
+          <p>Landing, Features, Pricing, About, Journal, and Contact — a complete presence, not a single screen you have to extend.</p>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg></div>
+          <h3>Fast &amp; featherlight</h3>
+          <p>No frameworks, no build step. Shared CSS and a few KB of vanilla JS. It loads instantly and ranks well.</p>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <h3>Accessible &amp; SEO-ready</h3>
+          <p>Semantic markup, focus states, reduced-motion support, and meta tags on every page. Do the right thing without extra work.</p>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2M9 21h6M12 17v4M6 7h12v6a6 6 0 0 1-12 0z"/></svg></div>
+          <h3>Yours to make yours</h3>
+          <p>Change one token, restyle the whole kit. Documented custom properties make brand swaps a two-minute job.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="section-sm">
+    <div class="container">
+      <div class="stats">
+        <div class="stat" data-reveal><div class="num"><em>100</em>/100</div><div class="lbl">Lighthouse design pass</div></div>
+        <div class="stat" data-reveal><div class="num"><em>6</em></div><div class="lbl">Crafted pages</div></div>
+        <div class="stat" data-reveal><div class="num">&lt;<em>1</em>s</div><div class="lbl">First paint</div></div>
+        <div class="stat" data-reveal><div class="num"><em>4.9</em>★</div><div class="lbl">Avg. buyer rating</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section" id="reviews">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Praise</span>
+        <h2>Loved by the people who ship it.</h2>
+      </div>
+      <div class="quotes">
+        <figure class="quote feature" data-reveal>
+          <div class="stars">★★★★★</div>
+          <p>“We relaunched on Aurelia in a weekend and our demo requests doubled. It's the first template that actually looked like our price point. Clients assume we spent five figures on it.”</p>
+          <figcaption class="who"><span class="avatar">MC</span><span><b>Mira Chen</b><small>Founder, Halcyon Studio</small></span></figcaption>
+        </figure>
+        <figure class="quote" data-reveal>
+          <div class="stars">★★★★★</div>
+          <p>“The detail is unreal. The light theme alone sold me.”</p>
+          <figcaption class="who"><span class="avatar">AK</span><span><b>Alex Kramer</b><small>Design lead, Vireo</small></span></figcaption>
+        </figure>
+        <figure class="quote" data-reveal>
+          <div class="stars">★★★★★</div>
+          <p>“I've bought a dozen templates. This is the only one I didn't have to fix before launch.”</p>
+          <figcaption class="who"><span class="avatar">SR</span><span><b>Sam Rivera</b><small>Indie maker</small></span></figcaption>
+        </figure>
+        <figure class="quote feature" data-reveal>
+          <div class="stars">★★★★★</div>
+          <p>“Aurelia set the visual bar for our entire rebrand. Everything downstream — deck, app, emails — now inherits from it. Worth ten times what we paid.”</p>
+          <figcaption class="who"><span class="avatar">LN</span><span><b>Lena Novak</b><small>CMO, Solène</small></span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Questions</span>
+        <h2>The fine print, refined.</h2>
+      </div>
+      <div class="faq" data-reveal>
+        <details class="qa">
+          <summary>What exactly do I receive?<span class="plus">+</span></summary>
+          <p class="ans">The complete Aurelia kit: six fully-designed HTML pages, one shared stylesheet, one shared script, and documentation. No build tools, no dependencies — open it in any browser and it works. Every subscription tier includes future updates.</p>
+        </details>
+        <details class="qa">
+          <summary>Can I use Aurelia for client work?<span class="plus">+</span></summary>
+          <p class="ans">Yes — the Studio tier is built for exactly that. Use it across unlimited client projects and hand off the source. The Personal tier covers a single brand or product of your own.</p>
+        </details>
+        <details class="qa">
+          <summary>Do I need to know how to code?<span class="plus">+</span></summary>
+          <p class="ans">Enough to edit text and swap a few colour tokens. Everything visual is controlled by clearly-named CSS variables, so rebranding is a two-minute job. If you can edit a paragraph, you can ship Aurelia.</p>
+        </details>
+        <details class="qa">
+          <summary>How is this different from a $19 theme?<span class="plus">+</span></summary>
+          <p class="ans">Restraint and finish. Aurelia is opinionated about type, spacing, and colour the way an expensive studio would be — the parts cheap themes get wrong. You're paying for taste and the hours you won't spend fixing it.</p>
+        </details>
+        <details class="qa">
+          <summary>What's your refund policy?<span class="plus">+</span></summary>
+          <p class="ans">Every plan starts with a 14-day free trial, no card required. If a paid month ever isn't worth it, email us within 14 days of the charge and we'll refund it in full — no forms, no friction.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-sm">
+    <div class="container">
+      <div class="cta" data-reveal>
+        <h2>Launch something worth the second look.</h2>
+        <p>Start your free trial today. Ship a site that looks like it cost a fortune — for the price of a coffee a week.</p>
+        <a href="pricing.html" class="btn btn-gold btn-lg">Start free trial</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-about">
+          <a href="index.html" class="brand"><span class="mark">◆</span> Aurelia</a>
+          <p>An elite website kit for brands that refuse ordinary. Crafted for taste, tuned for conversion.</p>
+          <div class="socials">
+            <a href="#" class="icon-btn" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7 8 8.2 12h-6.4l-5-6.6L6 22H3l7.5-8.6L2.6 2H9l4.5 6z"/></svg></a>
+            <a href="#" class="icon-btn" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+            <a href="#" class="icon-btn" aria-label="Dribbble"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M5 8c5 0 11 1 14 6M8.5 3.5C12 8 14 14 14.5 20.5M2.5 13c6-1 10-4 13-9"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="features.html">Features</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="blog.html">Journal</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+          <a href="#">Careers</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#">Licence</a>
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Aurelia. Crafted with care.</span>
+        <span>Design, elevated.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
