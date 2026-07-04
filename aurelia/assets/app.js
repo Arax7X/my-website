@@ -8,6 +8,10 @@
   var root = document.documentElement;
   root.classList.add("js");
 
+  var PREFERS_REDUCE = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var FINE_POINTER = !!(window.matchMedia && window.matchMedia("(pointer: fine)").matches);
+  var ENHANCE = FINE_POINTER && !PREFERS_REDUCE; // gate for cursor/tilt/magnetic/nav-indicator
+
   /* ---- Theme (persisted) ---- */
   var THEME_KEY = "aurelia-theme";
   function applyTheme(mode) {
@@ -130,8 +134,20 @@
     }
 
     var CAM = 2.7, tilt = -0.32;
+    var comets = [], lastT = 0;
+    function spawnComet() {
+      var ang = 0.45 + Math.random() * 0.35;
+      var speed = Math.min(W, H) * (0.9 + Math.random() * 0.5);
+      comets.push({
+        x: Math.random() * W * 0.6 - W * 0.1, y: Math.random() * H * 0.3,
+        vx: Math.cos(ang) * speed, vy: Math.sin(ang) * speed,
+        age: 0, life: 0.6 + Math.random() * 0.3
+      });
+    }
     function draw(t) {
       if (!W || !H) return;
+      var dt = lastT ? Math.max(0, Math.min(t - lastT, 0.1)) : 0;
+      lastT = t;
       ctx.clearRect(0, 0, W, H);
 
       // parallax easing
@@ -229,6 +245,30 @@
         ctx.fill();
         ctx.shadowBlur = 0;
         ctx.restore();
+      }
+
+      // shooting-star comets — rare, brief streaks across the scene
+      if (!reduce && dt && Math.random() < dt * 0.16) spawnComet();
+      for (var ci = comets.length - 1; ci >= 0; ci--) {
+        var cm = comets[ci];
+        cm.x += cm.vx * dt; cm.y += cm.vy * dt; cm.age += dt;
+        if (cm.age > cm.life || cm.x > W + 60 || cm.y > H + 60) { comets.splice(ci, 1); continue; }
+        var cp = cm.age / cm.life;
+        var calpha = Math.sin(Math.min(cp * 3, 1) * Math.PI);
+        var cmag = Math.sqrt(cm.vx * cm.vx + cm.vy * cm.vy) || 1;
+        var ctx2 = cm.x - (cm.vx / cmag) * 74, cty = cm.y - (cm.vy / cmag) * 74;
+        var cgrad = ctx.createLinearGradient(cm.x, cm.y, ctx2, cty);
+        cgrad.addColorStop(0, "rgba(255,255,255," + (0.9 * calpha).toFixed(3) + ")");
+        cgrad.addColorStop(0.45, "rgba(140,190,255," + (0.45 * calpha).toFixed(3) + ")");
+        cgrad.addColorStop(1, "rgba(53,230,255,0)");
+        ctx.beginPath();
+        ctx.strokeStyle = cgrad; ctx.lineWidth = 1.6; ctx.lineCap = "round";
+        ctx.moveTo(cm.x, cm.y); ctx.lineTo(ctx2, cty); ctx.stroke();
+        ctx.beginPath();
+        ctx.fillStyle = "rgba(255,255,255," + calpha.toFixed(3) + ")";
+        ctx.shadowBlur = 10; ctx.shadowColor = "rgba(170,205,255,0.9)";
+        ctx.arc(cm.x, cm.y, 1.5, 0, 6.2832);
+        ctx.fill(); ctx.shadowBlur = 0;
       }
     }
 
@@ -407,6 +447,184 @@
       nums.forEach(function (el) {
         el.setAttribute("data-count", (el.textContent || "").trim());
         io2.observe(el);
+      });
+    })();
+
+    /* Custom magnetic cursor (fine pointer + motion allowed only) */
+    if (ENHANCE) (function () {
+      var dot = document.createElement("div"); dot.className = "cursor-dot";
+      var ring = document.createElement("div"); ring.className = "cursor-ring";
+      document.body.appendChild(dot); document.body.appendChild(ring);
+      root.classList.add("has-cursor");
+      var mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my, live = false;
+      window.addEventListener("pointermove", function (e) {
+        mx = e.clientX; my = e.clientY;
+        if (!live) { live = true; dot.style.opacity = "1"; ring.style.opacity = "0.8"; }
+        dot.style.transform = "translate(" + mx + "px," + my + "px) translate(-50%,-50%)";
+      }, { passive: true });
+      document.addEventListener("mouseleave", function () { dot.style.opacity = "0"; ring.style.opacity = "0"; });
+      (function loop() {
+        rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
+        ring.style.transform = "translate(" + rx + "px," + ry + "px) translate(-50%,-50%)";
+        requestAnimationFrame(loop);
+      })();
+      var HOVER_SEL = "a, button, .btn, .icon-btn, summary, [data-menu-toggle], [data-theme-toggle]";
+      document.addEventListener("pointerover", function (e) {
+        if (e.target.closest && e.target.closest(HOVER_SEL)) ring.classList.add("hover");
+      });
+      document.addEventListener("pointerout", function (e) {
+        if (e.target.closest && e.target.closest(HOVER_SEL)) ring.classList.remove("hover");
+      });
+    })();
+
+    /* Magnetic pull on buttons */
+    if (ENHANCE) document.querySelectorAll(".btn, .icon-btn").forEach(function (el) {
+      var rect = null;
+      el.addEventListener("pointerenter", function () { rect = el.getBoundingClientRect(); });
+      el.addEventListener("pointermove", function (e) {
+        if (!rect) rect = el.getBoundingClientRect();
+        var mx = e.clientX - (rect.left + rect.width / 2);
+        var my = e.clientY - (rect.top + rect.height / 2);
+        var tx = Math.max(-14, Math.min(14, mx * 0.32));
+        var ty = Math.max(-10, Math.min(10, my * 0.32)) - 2;
+        el.style.transition = "";
+        el.style.transform = "translate(" + tx.toFixed(1) + "px," + ty.toFixed(1) + "px)";
+      });
+      el.addEventListener("pointerleave", function () {
+        rect = null;
+        el.style.transition = "transform 0.5s cubic-bezier(.2,1,.3,1)";
+        el.style.transform = "translate(0,0)";
+      });
+    });
+
+    /* 3D tilt + spotlight glare on cards, pricing, quotes, posts */
+    if (ENHANCE) document.querySelectorAll(".card, .price, .quote, .post").forEach(function (el) {
+      var rect = null;
+      el.addEventListener("pointerenter", function () { rect = el.getBoundingClientRect(); });
+      el.addEventListener("pointermove", function (e) {
+        if (!rect) rect = el.getBoundingClientRect();
+        var px = (e.clientX - rect.left) / rect.width;
+        var py = (e.clientY - rect.top) / rect.height;
+        var rxDeg = (0.5 - py) * 7;
+        var ryDeg = (px - 0.5) * 9;
+        el.style.transition = "";
+        el.style.transform = "perspective(900px) rotateX(" + rxDeg.toFixed(2) + "deg) rotateY(" + ryDeg.toFixed(2) + "deg) translateY(-6px)";
+        el.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
+        el.style.setProperty("--my", (py * 100).toFixed(1) + "%");
+      });
+      el.addEventListener("pointerleave", function () {
+        rect = null;
+        el.style.transition = "transform 0.5s var(--ease)";
+        el.style.transform = "";
+      });
+    });
+
+    /* Click-burst particles on primary CTAs */
+    (function () {
+      if (PREFERS_REDUCE) return;
+      function burst(x, y) {
+        var host = document.createElement("div");
+        host.className = "click-burst";
+        host.style.left = x + "px"; host.style.top = y + "px";
+        var n = 10;
+        for (var i = 0; i < n; i++) {
+          var a = (Math.PI * 2 * i) / n + Math.random() * 0.4;
+          var dist = 26 + Math.random() * 30;
+          var b = document.createElement("i");
+          b.style.setProperty("--bx", (Math.cos(a) * dist).toFixed(1) + "px");
+          b.style.setProperty("--by", (Math.sin(a) * dist).toFixed(1) + "px");
+          b.style.background = i % 2 ? "var(--violet)" : "var(--cyan)";
+          host.appendChild(b);
+        }
+        document.body.appendChild(host);
+        setTimeout(function () { host.remove(); }, 700);
+      }
+      document.querySelectorAll(".btn-gold").forEach(function (b) {
+        b.addEventListener("click", function (e) { burst(e.clientX, e.clientY); });
+      });
+    })();
+
+    /* Magnetic sliding nav indicator */
+    if (ENHANCE) document.querySelectorAll(".nav-links").forEach(function (nav) {
+      var ind = document.createElement("span");
+      ind.className = "nav-indicator";
+      nav.appendChild(ind);
+      var links = nav.querySelectorAll("a");
+      links.forEach(function (a) {
+        a.addEventListener("mouseenter", function () {
+          var r1 = nav.getBoundingClientRect(), r2 = a.getBoundingClientRect();
+          ind.style.left = (r2.left - r1.left) + "px";
+          ind.style.width = r2.width + "px";
+          ind.style.opacity = "1";
+        });
+      });
+      nav.addEventListener("mouseleave", function () { ind.style.opacity = "0"; });
+    });
+
+    /* Cipher-reveal effect on hero headlines */
+    (function () {
+      var heads = document.querySelectorAll(".hero h1, .page-hero h1");
+      if (!heads.length || PREFERS_REDUCE) return;
+      var CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ01#$%&*+=";
+      function collectTextNodes(el, out) {
+        for (var i = 0; i < el.childNodes.length; i++) {
+          var n = el.childNodes[i];
+          if (n.nodeType === 3) { if (n.nodeValue.replace(/\s/g, "") !== "") out.push(n); }
+          else if (n.nodeType === 1) collectTextNodes(n, out);
+        }
+        return out;
+      }
+      function scramble(el) {
+        var chunks = collectTextNodes(el, []).map(function (n) {
+          return { node: n, chars: n.nodeValue.split("") };
+        });
+        var total = chunks.reduce(function (a, c) { return a + c.chars.length; }, 0);
+        if (!total) return;
+        var dur = 560 + total * 16, t0 = 0;
+        function frame(now) {
+          if (!t0) t0 = now;
+          var p = Math.min((now - t0) / dur, 1);
+          var revealed = Math.floor(p * total), count = 0;
+          chunks.forEach(function (c) {
+            var out = "";
+            for (var i = 0; i < c.chars.length; i++) {
+              var ch = c.chars[i];
+              out += /[a-zA-Z0-9]/.test(ch) ? (count < revealed ? ch : CHARS[(Math.random() * CHARS.length) | 0]) : ch;
+              count++;
+            }
+            c.node.nodeValue = out;
+          });
+          if (p < 1) requestAnimationFrame(frame);
+          else chunks.forEach(function (c) { c.node.nodeValue = c.chars.join(""); });
+        }
+        requestAnimationFrame(frame);
+      }
+      if ("IntersectionObserver" in window) {
+        var io4 = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) { io4.unobserve(en.target); scramble(en.target); }
+          });
+        }, { threshold: 0.4 });
+        heads.forEach(function (h) { io4.observe(h); });
+      } else {
+        heads.forEach(scramble);
+      }
+    })();
+
+    /* Infinite logo marquee */
+    (function () {
+      if (PREFERS_REDUCE) return;
+      document.querySelectorAll(".logo-row").forEach(function (row) {
+        var items = Array.prototype.slice.call(row.children);
+        if (items.length < 3) return;
+        row.classList.add("marquee");
+        var track = document.createElement("div");
+        track.className = "logo-track";
+        items.forEach(function (el) { track.appendChild(el); });
+        var clone = track.cloneNode(true);
+        clone.setAttribute("aria-hidden", "true");
+        row.appendChild(track);
+        row.appendChild(clone);
       });
     })();
   });

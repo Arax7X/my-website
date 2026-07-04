@@ -6,6 +6,23 @@
    so every existing reference becomes cyber-cold automatically.
    ============================================================ */
 
+/* ---------- Cinematic page transitions (native View Transitions API) ---------- */
+/* Zero JS: supporting browsers cross-fade + morph between pages automatically. */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: 0.5s cubic-bezier(.2,.8,.2,1) both aureliaFadeOut; }
+::view-transition-new(root) { animation: 0.55s cubic-bezier(.2,.8,.2,1) both aureliaFadeIn; }
+@keyframes aureliaFadeOut {
+  from { opacity: 1; transform: scale(1); filter: blur(0); }
+  to   { opacity: 0; transform: scale(0.98); filter: blur(6px); }
+}
+@keyframes aureliaFadeIn {
+  from { opacity: 0; transform: scale(1.015); filter: blur(6px); }
+  to   { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}
+
 /* ---------- Tokens ---------- */
 :root {
   /* Deep space base */
@@ -542,6 +559,62 @@ html:not(.js) [data-reveal] { opacity: 1; transform: none; }
 
 /* ---------- Mobile menu ---------- */
 .mobile-menu { display: none; }
+
+/* ---------- Custom magnetic cursor (desktop, motion-allowed only) ---------- */
+html.has-cursor, html.has-cursor * { cursor: none !important; }
+.cursor-dot, .cursor-ring {
+  position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; opacity: 0;
+  border-radius: 50%; will-change: transform;
+}
+.cursor-dot {
+  width: 6px; height: 6px; background: var(--cyan); box-shadow: 0 0 8px var(--glow-cyan);
+  transition: opacity 0.25s var(--ease);
+}
+.cursor-ring {
+  width: 34px; height: 34px; border: 1px solid var(--gold-line);
+  transition: width 0.25s var(--ease), height 0.25s var(--ease), border-color 0.25s var(--ease), background 0.25s var(--ease), opacity 0.25s var(--ease);
+}
+.cursor-ring.hover { width: 56px; height: 56px; border-color: var(--cyan); background: var(--gold-soft); }
+html.has-cursor .nav-links a::after { display: none; }
+
+/* ---------- Nav magnetic indicator ---------- */
+.nav-links { position: relative; }
+.nav-indicator {
+  position: absolute; bottom: -7px; left: 0; height: 1.5px; width: 0; opacity: 0;
+  background: var(--aurora); pointer-events: none;
+  transition: left 0.35s var(--ease), width 0.35s var(--ease), opacity 0.25s var(--ease);
+}
+
+/* ---------- 3D tilt + spotlight glare (cards / pricing / quotes / posts) ---------- */
+.price, .quote { position: relative; }
+.card::after, .price::after, .quote::after, .post::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.16), transparent 55%);
+  transition: opacity 0.4s var(--ease);
+}
+.card:hover::after, .price:hover::after, .quote:hover::after, .post:hover::after { opacity: 1; }
+
+/* ---------- Click-burst particles ---------- */
+.click-burst { position: fixed; top: 0; left: 0; width: 0; height: 0; pointer-events: none; z-index: 9998; }
+.click-burst i {
+  position: absolute; top: 0; left: 0; width: 5px; height: 5px; border-radius: 50%;
+  box-shadow: 0 0 6px var(--glow-cyan);
+  animation: burstFly 0.65s cubic-bezier(.2,.8,.3,1) forwards;
+}
+@keyframes burstFly {
+  0%   { transform: translate(-50%, -50%) translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) translate(var(--bx), var(--by)) scale(0.2); opacity: 0; }
+}
+
+/* ---------- Infinite logo marquee ---------- */
+.logo-row.marquee {
+  justify-content: flex-start; flex-wrap: nowrap; gap: 0; overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.logo-track { display: flex; align-items: center; gap: 60px; flex-shrink: 0; padding-right: 60px; animation: logoMarquee 28s linear infinite; }
+.logo-row.marquee:hover .logo-track { animation-play-state: paused; }
+@keyframes logoMarquee { from { transform: translateX(0); } to { transform: translateX(-100%); } }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
