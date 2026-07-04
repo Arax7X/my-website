@@ -334,6 +334,81 @@
     document.querySelectorAll("[data-year]").forEach(function (el) {
       el.textContent = new Date().getFullYear();
     });
+
+    /* Scroll progress bar */
+    (function () {
+      var bar = document.createElement("div");
+      bar.className = "scroll-progress";
+      var fill = document.createElement("i");
+      bar.appendChild(fill);
+      document.body.appendChild(bar);
+      var ticking = false;
+      function update() {
+        var el = document.documentElement;
+        var max = el.scrollHeight - el.clientHeight;
+        var p = max > 0 ? (window.pageYOffset || el.scrollTop) / max : 0;
+        p = p < 0 ? 0 : p > 1 ? 1 : p;
+        fill.style.transform = "scaleX(" + p.toFixed(4) + ")";
+        ticking = false;
+      }
+      function onScroll() {
+        if (!ticking) { ticking = true; requestAnimationFrame(update); }
+      }
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll, { passive: true });
+      update();
+    })();
+
+    /* Count-up stat numbers (reveal-triggered) */
+    (function () {
+      var nums = document.querySelectorAll(".stat .num em");
+      if (!nums.length) return;
+      var reduceMo = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduceMo || !("IntersectionObserver" in window)) return; // leave final values in place
+
+      function format(n, decimals, comma) {
+        var s = n.toFixed(decimals);
+        if (comma) {
+          var parts = s.split(".");
+          parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          s = parts.join(".");
+        }
+        return s;
+      }
+      function animate(el, target, decimals, comma) {
+        var dur = 1150, t0 = 0;
+        function ease(x) { return 1 - Math.pow(1 - x, 3); } // easeOutCubic
+        function step(now) {
+          if (!t0) t0 = now;
+          var p = Math.min((now - t0) / dur, 1);
+          el.textContent = format(target * ease(p), decimals, comma);
+          if (p < 1) requestAnimationFrame(step);
+          else el.textContent = format(target, decimals, comma);
+        }
+        el.textContent = format(0, decimals, comma);
+        requestAnimationFrame(step);
+      }
+
+      var io2 = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting) return;
+          var el = en.target;
+          io2.unobserve(el);
+          var raw = (el.getAttribute("data-count") || el.textContent || "").trim();
+          var comma = raw.indexOf(",") > -1;
+          var clean = raw.replace(/,/g, "");
+          var val = parseFloat(clean);
+          if (isNaN(val) || val === 0) return;
+          var dot = clean.indexOf(".");
+          var decimals = dot > -1 ? clean.length - dot - 1 : 0;
+          animate(el, val, decimals, comma);
+        });
+      }, { threshold: 0.6 });
+      nums.forEach(function (el) {
+        el.setAttribute("data-count", (el.textContent || "").trim());
+        io2.observe(el);
+      });
+    })();
   });
 
   function ready(fn) {

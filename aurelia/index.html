@@ -27,6 +27,32 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/styles.css" />
+  <!-- Structured data (replace aurelia.studio with your domain before deploying) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://aurelia.studio/#org",
+        "name": "Aurelia",
+        "url": "https://aurelia.studio/",
+        "logo": "https://aurelia.studio/assets/favicon.svg",
+        "image": "https://aurelia.studio/assets/og.png",
+        "description": "An elite, conversion-first website kit for premium brands and studios.",
+        "sameAs": ["https://twitter.com/aureliakit"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://aurelia.studio/#website",
+        "name": "Aurelia",
+        "url": "https://aurelia.studio/",
+        "description": "An elite website kit for brands that refuse ordinary — six crafted pages, one refined design system.",
+        "publisher": { "@id": "https://aurelia.studio/#org" }
+      }
+    ]
+  }
+  </script>
   <script>
     (function () {
       try {

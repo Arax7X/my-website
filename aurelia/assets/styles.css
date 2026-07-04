@@ -170,6 +170,17 @@ h1, h2, h3, h4 {
 .btn-lg { padding: 17px 34px; font-size: 1rem; }
 .btn-block { width: 100%; }
 
+/* ---------- Scroll progress ---------- */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 2.5px; z-index: 200;
+  pointer-events: none; background: transparent;
+}
+.scroll-progress i {
+  display: block; height: 100%; width: 100%; transform: scaleX(0); transform-origin: 0 50%;
+  background: var(--aurora); box-shadow: 0 0 12px -1px var(--glow-cyan);
+  will-change: transform;
+}
+
 /* ---------- Nav ---------- */
 .nav {
   position: sticky; top: 0; z-index: 100;
