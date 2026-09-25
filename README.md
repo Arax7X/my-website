@@ -1,38 +1,151 @@
-# my-website
+# ◆ Aurelia — Design, elevated
 
-A small collection of static web pages I built while learning HTML, CSS, and
-JavaScript. Everything is plain HTML with inline styles and scripts — no build
-step and no dependencies.
+An elite, conversion-first website kit for premium brands and studios. Six crafted
+pages that share one refined design system — with a live 3D cosmic background,
+dark & light themes, tasteful motion, and zero build step. Open it in a browser
+and it just works.
 
-## Pages
+> **Vibe:** deep-space · cold cyber · steel→cyan aurora · living 3D wireframe globe · futuristic-premium.
 
-| File | What it is |
-|------|------------|
-| [`index.html`](index.html) | A single-page personal portfolio — intro, about, skills, a JavaScript-rendered projects list, and contact details. |
-| [`landing.html`](landing.html) | "Nova", a modern marketing landing page template with hero, features, testimonials, and pricing sections. |
-| [`todo.html`](todo.html) | A browser-based to-do app (details below). |
+---
 
-## To-do app features
+## What's inside
 
-`todo.html` is a self-contained to-do list that saves tasks in the browser's
-`localStorage`, so they persist between visits. It supports:
+| File | Purpose |
+|------|---------|
+| `index.html` | Landing page — hero, showcase, features, stats, testimonials, FAQ, CTA |
+| `features.html` | Deep-dive on the kit's capabilities |
+| `pricing.html` | Membership tiers with an animated monthly/annual toggle |
+| `about.html` | Studio story, principles, and stats |
+| `blog.html` | "Journal" — an essay/blog index layout |
+| `article.html` | Single-article template — a full, readable essay layout |
+| `contact.html` | Contact form + details (demo form, wire to your own endpoint) |
+| `404.html` | Styled not-found page with the live cosmos background |
+| `assets/styles.css` | The shared design system — every page inherits it |
+| `assets/app.js` | Shared behaviour: theme toggle, nav, reveal, pricing toggle |
+| `assets/favicon.svg` | The ◆ brand mark as a crisp SVG favicon |
+| `assets/og.png` | 1200×630 social-share image (Open Graph / Twitter) |
+| `assets/og-card.html` | Editable source for `og.png` — re-render to regenerate |
+| `robots.txt` | Allows crawlers and points them at the sitemap |
+| `sitemap.xml` | Lists every indexable page for search engines |
 
-- Add, edit (double-click a task), and delete tasks
-- Click a task to toggle it done
-- Filter by All / Active / Done
-- Search tasks by text
-- Drag and drop to reorder
-- Export all tasks to a JSON file
-- A live "tasks left" counter
+No frameworks. No npm. No bundler. Just HTML, one stylesheet, and a few KB of
+vanilla JavaScript.
 
-## Viewing the site
+---
 
-These are static files, so you can open any `.html` file directly in your
-browser. To view them the way they'd be served on the web, run a simple local
-server from the project folder:
+## Quick start
 
-```bash
-python3 -m http.server 8000
+1. Open `index.html` in any modern browser, **or** serve the folder:
+   ```bash
+   cd aurelia
+   python3 -m http.server 8080
+   # then visit http://localhost:8080
+   ```
+2. Edit the text to make it yours.
+3. Change a few tokens (below) to rebrand.
+4. Deploy the folder to any static host (Netlify, Vercel, GitHub Pages, S3…).
+
+---
+
+## Before you go live
+
+A few one-time swaps so the kit points at *you*, not the demo:
+
+1. **Set your domain.** Every page ships with `https://aurelia.studio` as a placeholder
+   in its `<link rel="canonical">`, its `og:`/`twitter:` tags, and its JSON-LD structured
+   data — and the same string lives in `robots.txt` and `sitemap.xml`. Find-and-replace it
+   with your real domain across the whole folder; social previews, canonical URLs, rich
+   results, and crawling all depend on it. While you're in `sitemap.xml`, refresh the
+   `<lastmod>` dates.
+2. **Wire the contact form.** `contact.html` is a demo form; point it at your own email
+   service or form endpoint.
+3. **Regenerate the share image (optional).** After rebranding, edit
+   `assets/og-card.html` and re-render it to `assets/og.png` at 1200×630. Any headless
+   screenshot tool works, e.g.:
+   ```bash
+   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+     --headless=new --hide-scrollbars --window-size=1200,630 \
+     --screenshot=assets/og.png assets/og-card.html
+   ```
+
+---
+
+## Rebrand in two minutes
+
+Everything visual is controlled by CSS custom properties at the top of
+`assets/styles.css`. Change these and the whole kit follows.
+
+```css
+:root {
+  --gold:   #3df0ff;   /* accent 1 — electric cyan (buttons, links) */
+  --gold-2: #4b7bff;   /* accent 2 — steel blue (gradient partner)  */
+  --violet: #3f6dff;   /* aurora blue — also colours the globe      */
+  --cyan:   #35e9ff;   /* aurora cyan — also colours the globe      */
+  --bg:     #05060d;   /* page background (dark)                    */
+  --ink:    #eef0fb;   /* body text (dark)                          */
+  --serif:  "Inter Tight", sans-serif;   /* display font */
+  --sans:   "Inter", sans-serif;           /* body font    */
+  --mono:   "IBM Plex Mono", monospace;   /* data labels   */
+}
 ```
 
-Then open <http://localhost:8000/> in your browser.
+> The 3D background reads `--violet` and `--cyan` at load, so changing those two
+> tokens re-tints the globe and starfield glow along with the rest of the kit.
+
+The light theme lives under `html.light { … }` in the same file — adjust those
+tokens to tune light mode independently.
+
+### Swap the fonts
+Replace the Google Fonts `<link>` in each page's `<head>` and update `--serif`,
+`--sans`, and `--mono`. That's it.
+
+---
+
+## Features
+
+- **Live 3D cosmic background** — a rotating, glowing globe + starfield on a single
+  `<canvas>` (a few KB of vanilla JS, no library), pauses when hidden and stills for
+  `prefers-reduced-motion`.
+- **Six complete pages** sharing one coherent design language.
+- **Dark & light themes** — hand-tuned, saved to `localStorage`, no flash on load.
+- **Animated pricing toggle** — monthly/annual with a savings badge.
+- **Scroll-reveal animations** via `IntersectionObserver` (respects
+  `prefers-reduced-motion`).
+- **Scroll progress bar** — a thin accent-gradient indicator that tracks reading position.
+- **Count-up stat numbers** — figures animate from zero when scrolled into view (and show
+  their final value instantly under `prefers-reduced-motion`).
+- **Responsive** from phone to desktop, with a slide-down mobile menu.
+- **Accessible foundations** — semantic landmarks, focus states, ARIA where it counts.
+- **SEO-ready** — title, description, canonical URL, Open Graph + Twitter cards, and
+  JSON-LD structured data on every page, plus `robots.txt` and `sitemap.xml`.
+
+---
+
+## Customising behaviour
+
+`assets/app.js` reads a few `data-` attributes, so markup stays declarative:
+
+| Attribute | Effect |
+|-----------|--------|
+| `data-cosmos` | Mounts the animated 3D starfield + globe canvas inside the element |
+| `data-cosmos-sm` | On a `data-cosmos` host: renders a smaller globe (used on inner page heroes) |
+| `data-cosmos-center` | On a `data-cosmos` host: vertically centres the globe |
+| `data-theme-toggle` | Element toggles dark/light on click |
+| `data-menu-toggle` | Element opens/closes the mobile menu |
+| `data-reveal` | Element fades/rises in when scrolled into view (`.d1`/`.d2`/`.d3` stagger) |
+| `data-price-switch` | The monthly/annual switch |
+| `data-m` + `data-a` | Price value shown for monthly vs. annual |
+| `data-per` | Text after the price ("/month" vs "/mo · billed yearly") |
+| `data-year` | Filled with the current year |
+
+---
+
+## Licence
+
+Provided as a template for your own and client projects under your Aurelia
+membership. Don't resell or redistribute the kit itself as a template.
+
+---
+
+*Crafted with care. Design, elevated.*
