@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why expensive design is mostly restraint — Aurelia</title>
+  <meta name="description" content="The gap between a $50 site and a $50,000 one is rarely more features — it's fewer, chosen better. On the discipline of leaving things out, and why empty space does the heavy lifting." />
+  <meta name="theme-color" content="#05060d" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="canonical" href="https://aurelia.studio/article.html" />
+  <!-- Social share (replace aurelia.studio with your domain before deploying) -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Aurelia" />
+  <meta property="og:url" content="https://aurelia.studio/article.html" />
+  <meta property="og:title" content="Why expensive design is mostly restraint" />
+  <meta property="og:description" content="The gap between a $50 site and a $50,000 one is rarely more features — it's fewer, chosen better." />
+  <meta property="og:image" content="https://aurelia.studio/assets/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@aureliakit" />
+  <meta name="twitter:title" content="Why expensive design is mostly restraint" />
+  <meta name="twitter:description" content="The gap between a $50 site and a $50,000 one is rarely more features — it's fewer, chosen better." />
+  <meta name="twitter:image" content="https://aurelia.studio/assets/og.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <!-- Structured data (replace aurelia.studio with your domain before deploying) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://aurelia.studio/article.html" },
+    "headline": "Why expensive design is mostly restraint",
+    "description": "The gap between a $50 site and a $50,000 one is rarely more features — it's fewer, chosen better.",
+    "image": "https://aurelia.studio/assets/og.png",
+    "datePublished": "2026-06-01",
+    "dateModified": "2026-07-02",
+    "author": { "@type": "Organization", "name": "Aurelia Studio", "url": "https://aurelia.studio/" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Aurelia",
+      "logo": { "@type": "ImageObject", "url": "https://aurelia.studio/assets/favicon.svg" }
+    }
+  }
+  </script>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("aurelia-theme");
+        if (!t) t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        if (t === "light") document.documentElement.classList.add("light");
+      } catch (e) {}
+      document.documentElement.classList.remove("no-js");
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand"><span class="mark">◆</span> Aurelia</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="features.html">Features</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="about.html">About</a>
+        <a href="blog.html">Journal</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="icon-btn" data-theme-toggle aria-label="Toggle theme">
+          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+        <a href="pricing.html" class="btn btn-gold">Start free trial</a>
+        <button class="icon-btn hamburger" data-menu-toggle aria-label="Menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="features.html">Features</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="about.html">About</a>
+    <a href="blog.html">Journal</a>
+    <a href="contact.html">Contact</a>
+    <a href="pricing.html" class="btn btn-gold">Start free trial</a>
+  </div>
+
+  <!-- Article header -->
+  <section class="page-hero article-hero">
+    <div class="container">
+      <span class="eyebrow" data-reveal>Essay · June 2026</span>
+      <h1 data-reveal>Why expensive design is mostly restraint</h1>
+      <div class="article-byline" data-reveal>
+        <span class="byline-mark">◆</span>
+        <span>Aurelia Studio · 6 min read</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Article body -->
+  <section class="section" style="padding-top:24px;">
+    <div class="container">
+      <div class="article-body" data-reveal>
+        <p class="lead-para">The gap between a $50 website and a $50,000 one is rarely more features. It's fewer, chosen better — and the confidence to leave the rest out.</p>
+
+        <p>Ask someone why a brand looks expensive and they'll reach for the wrong answers: the animations, the photography, the clever interactions. Those help. But watch what actually happens when a studio takes an ordinary page and makes it feel worth ten times the price. Mostly, they remove things.</p>
+
+        <p>They cut the third call-to-action. They delete two of the five accent colours. They set one typeface for headlines and one for reading, and they resist the urge to add a third. What's left has room to breathe — and breathing room reads, unmistakably, as money.</p>
+
+        <h2>Space is not empty</h2>
+
+        <p>The most common mistake in amateur design is treating whitespace as wasted space — a vacancy to be filled with one more testimonial, one more badge, one more "as seen in." But space is doing work. It tells the eye where to rest and what matters. Crowd it and everything shouts at once, which is the same as nothing speaking at all.</p>
+
+        <blockquote>Restraint isn't the absence of decisions. It's the presence of harder ones.</blockquote>
+
+        <p>Adding is easy. Anyone can add. The expensive move is subtraction, because subtraction requires a point of view — a willingness to say <em>this matters and that doesn't</em>, and to be wrong in public if you've judged it badly. That's why cheap sites are busy and premium ones are quiet. Quiet is a claim of confidence.</p>
+
+        <h2>A system, not a pile of choices</h2>
+
+        <p>The second thing studios do is stop making one-off decisions. Instead of picking a colour here and a spacing there, they define a small set of rules and follow them everywhere. A handful of type sizes. One spacing scale. Two accent colours, used the same way every time.</p>
+
+        <p>The result feels coherent because it <strong>is</strong> coherent — not by taste applied page by page, but by construction. When every element inherits from the same system, consistency stops being a thing you police and becomes a thing you get for free.</p>
+
+        <ul>
+          <li>One accent, used sparingly, beats a rainbow used everywhere.</li>
+          <li>A consistent spacing scale is the cheapest way to look considered.</li>
+          <li>Motion should whisper. If you notice the animation, it's too much.</li>
+        </ul>
+
+        <h2>The details nobody notices — until they're wrong</h2>
+
+        <p>Finally, there's the unglamorous work: the focus ring that's actually visible, the hover state that responds the way your hand expects, the dark-mode contrast that's been checked rather than assumed. No one will compliment these. They're only felt in their absence, as a vague sense that something is off.</p>
+
+        <p>That vague sense is the whole game. Trust is built from a hundred details a visitor never consciously registers. Get them right and the work feels effortless and inevitable. Get them wrong and no amount of gradient will save it.</p>
+
+        <hr />
+
+        <p>So if you want a site that looks expensive, resist the instinct to add. Choose fewer things and make them perfect. Give them room. Let the empty space do the heavy lifting — it's the most expensive material you have, and it's free.</p>
+      </div>
+
+      <div class="article-foot" data-reveal>
+        <a href="blog.html" class="back">← Back to the Journal</a>
+        <a href="contact.html" class="btn btn-ghost">Subscribe for the next one</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-sm">
+    <div class="container">
+      <div class="cta" data-reveal>
+        <h2>Build something worth the restraint.</h2>
+        <p>Start a free trial and put these ideas to work — six crafted pages, one coherent system, yours in minutes.</p>
+        <a href="pricing.html" class="btn btn-gold btn-lg">Start free trial</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-about">
+          <a href="index.html" class="brand"><span class="mark">◆</span> Aurelia</a>
+          <p>An elite website kit for brands that refuse ordinary. Crafted for taste, tuned for conversion.</p>
+          <div class="socials">
+            <a href="#" class="icon-btn" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7 8 8.2 12h-6.4l-5-6.6L6 22H3l7.5-8.6L2.6 2H9l4.5 6z"/></svg></a>
+            <a href="#" class="icon-btn" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+            <a href="#" class="icon-btn" aria-label="Dribbble"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M5 8c5 0 11 1 14 6M8.5 3.5C12 8 14 14 14.5 20.5M2.5 13c6-1 10-4 13-9"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="features.html">Features</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="blog.html">Journal</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+          <a href="#">Careers</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#">Licence</a>
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Aurelia. Crafted with care.</span>
+        <span>Design, elevated.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

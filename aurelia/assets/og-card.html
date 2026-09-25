@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- Build artifact: source for assets/og.png. Render at 1200x630 with headless Chrome. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    font-family: "Inter", sans-serif; background: #05060d; color: #eef0fb;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 92px 96px; position: relative; overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(58% 60% at 16% 4%, rgba(60, 110, 255, 0.36), transparent 60%),
+      radial-gradient(54% 60% at 90% 40%, rgba(53, 230, 255, 0.22), transparent 62%),
+      radial-gradient(80% 70% at 62% 122%, rgba(60, 110, 255, 0.20), transparent 70%);
+  }
+  body::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(120% 120% at 50% 50%, transparent 62%, rgba(5, 6, 13, 0.7) 100%);
+  }
+  .brand {
+    position: relative; z-index: 1; display: flex; align-items: center; gap: 16px;
+    font-family: "Inter Tight", sans-serif; font-weight: 700; font-size: 38px; letter-spacing: -0.02em;
+  }
+  .brand .mark { color: #3df0ff; }
+  h1 {
+    position: relative; z-index: 1; font-family: "Inter Tight", sans-serif; font-weight: 700;
+    font-size: 108px; line-height: 0.98; letter-spacing: -0.035em; margin-top: 38px;
+  }
+  h1 em {
+    font-style: normal;
+    background: linear-gradient(100deg, #d6e4ff 0%, #6aa6ff 42%, #45f0ff 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  p { position: relative; z-index: 1; margin-top: 34px; font-size: 31px; line-height: 1.4; color: #989dbd; max-width: 28ch; }
+  .foot {
+    position: absolute; left: 96px; right: 96px; bottom: 60px; z-index: 1;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 21px; color: #5f6486; letter-spacing: 0.02em;
+  }
+  .foot .tag { font-family: "IBM Plex Mono", monospace; letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+  <div class="brand"><span class="mark">◆</span> Aurelia</div>
+  <h1>Design, <em>elevated.</em></h1>
+  <p>An elite website kit for brands that refuse ordinary.</p>
+  <div class="foot">
+    <span>aurelia.studio</span>
+    <span class="tag">Six pages · one system · zero build</span>
+  </div>
+</body>
+</html>

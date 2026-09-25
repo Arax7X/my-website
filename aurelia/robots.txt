@@ -1,0 +1,6 @@
+# Aurelia — robots.txt
+# Replace aurelia.studio with your domain before deploying.
+User-agent: *
+Allow: /
+
+Sitemap: https://aurelia.studio/sitemap.xml

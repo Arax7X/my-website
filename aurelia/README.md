@@ -18,9 +18,16 @@ and it just works.
 | `pricing.html` | Membership tiers with an animated monthly/annual toggle |
 | `about.html` | Studio story, principles, and stats |
 | `blog.html` | "Journal" — an essay/blog index layout |
+| `article.html` | Single-article template — a full, readable essay layout |
 | `contact.html` | Contact form + details (demo form, wire to your own endpoint) |
+| `404.html` | Styled not-found page with the live cosmos background |
 | `assets/styles.css` | The shared design system — every page inherits it |
 | `assets/app.js` | Shared behaviour: theme toggle, nav, reveal, pricing toggle |
+| `assets/favicon.svg` | The ◆ brand mark as a crisp SVG favicon |
+| `assets/og.png` | 1200×630 social-share image (Open Graph / Twitter) |
+| `assets/og-card.html` | Editable source for `og.png` — re-render to regenerate |
+| `robots.txt` | Allows crawlers and points them at the sitemap |
+| `sitemap.xml` | Lists every indexable page for search engines |
 
 No frameworks. No npm. No bundler. Just HTML, one stylesheet, and a few KB of
 vanilla JavaScript.
@@ -41,6 +48,29 @@ vanilla JavaScript.
 
 ---
 
+## Before you go live
+
+A few one-time swaps so the kit points at *you*, not the demo:
+
+1. **Set your domain.** Every page ships with `https://aurelia.studio` as a placeholder
+   in its `<link rel="canonical">`, its `og:`/`twitter:` tags, and its JSON-LD structured
+   data — and the same string lives in `robots.txt` and `sitemap.xml`. Find-and-replace it
+   with your real domain across the whole folder; social previews, canonical URLs, rich
+   results, and crawling all depend on it. While you're in `sitemap.xml`, refresh the
+   `<lastmod>` dates.
+2. **Wire the contact form.** `contact.html` is a demo form; point it at your own email
+   service or form endpoint.
+3. **Regenerate the share image (optional).** After rebranding, edit
+   `assets/og-card.html` and re-render it to `assets/og.png` at 1200×630. Any headless
+   screenshot tool works, e.g.:
+   ```bash
+   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+     --headless=new --hide-scrollbars --window-size=1200,630 \
+     --screenshot=assets/og.png assets/og-card.html
+   ```
+
+---
+
 ## Rebrand in two minutes
 
 Everything visual is controlled by CSS custom properties at the top of
@@ -54,9 +84,9 @@ Everything visual is controlled by CSS custom properties at the top of
   --cyan:   #35e9ff;   /* aurora cyan — also colours the globe      */
   --bg:     #05060d;   /* page background (dark)                    */
   --ink:    #eef0fb;   /* body text (dark)                          */
-  --serif:  "Space Grotesk", sans-serif;   /* display font */
+  --serif:  "Inter Tight", sans-serif;   /* display font */
   --sans:   "Inter", sans-serif;           /* body font    */
-  --mono:   "JetBrains Mono", monospace;   /* HUD labels   */
+  --mono:   "IBM Plex Mono", monospace;   /* data labels   */
 }
 ```
 
@@ -82,9 +112,13 @@ Replace the Google Fonts `<link>` in each page's `<head>` and update `--serif`,
 - **Animated pricing toggle** — monthly/annual with a savings badge.
 - **Scroll-reveal animations** via `IntersectionObserver` (respects
   `prefers-reduced-motion`).
+- **Scroll progress bar** — a thin accent-gradient indicator that tracks reading position.
+- **Count-up stat numbers** — figures animate from zero when scrolled into view (and show
+  their final value instantly under `prefers-reduced-motion`).
 - **Responsive** from phone to desktop, with a slide-down mobile menu.
 - **Accessible foundations** — semantic landmarks, focus states, ARIA where it counts.
-- **SEO-ready** — title, description, and Open Graph tags on every page.
+- **SEO-ready** — title, description, canonical URL, Open Graph + Twitter cards, and
+  JSON-LD structured data on every page, plus `robots.txt` and `sitemap.xml`.
 
 ---
 
