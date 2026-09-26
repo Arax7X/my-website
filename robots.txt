@@ -3,4 +3,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aurelia.studio/sitemap.xml
+Sitemap: https://arax7x.github.io/my-website/sitemap.xml
