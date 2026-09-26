@@ -2,43 +2,43 @@
 <!-- Aurelia sitemap. Replace aurelia.studio with your domain, then update lastmod. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://aurelia.studio/index.html</loc>
+    <loc>https://arax7x.github.io/my-website/index.html</loc>
     <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://aurelia.studio/features.html</loc>
+    <loc>https://arax7x.github.io/my-website/features.html</loc>
     <lastmod>2026-07-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://aurelia.studio/pricing.html</loc>
+    <loc>https://arax7x.github.io/my-website/pricing.html</loc>
     <lastmod>2026-07-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://aurelia.studio/about.html</loc>
+    <loc>https://arax7x.github.io/my-website/about.html</loc>
     <lastmod>2026-07-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://aurelia.studio/blog.html</loc>
+    <loc>https://arax7x.github.io/my-website/blog.html</loc>
     <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://aurelia.studio/article.html</loc>
+    <loc>https://arax7x.github.io/my-website/article.html</loc>
     <lastmod>2026-07-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://aurelia.studio/contact.html</loc>
+    <loc>https://arax7x.github.io/my-website/contact.html</loc>
     <lastmod>2026-07-02</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
